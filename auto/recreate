@@ -3,7 +3,7 @@
 
 cd $(dirname $0)/..
 
-export PROJECTNAME=${PROJECTNAME:-localdev}
+export PROJECTNAME=${PROJECTNAME:-devops}
 
 ./auto/down
 ./auto/up

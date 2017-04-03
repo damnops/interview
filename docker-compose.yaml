@@ -2,7 +2,7 @@ version: '2'
 services:
   app:
     build:
-      context: app
+      context: ./app
       dockerfile: Dockerfile
     ports:
       - "80:80"
@@ -11,7 +11,21 @@ services:
     links:
       - db:db.local.chatops.in
     volumes:
-      - "app/:/opt/devops/app"
+      - "./app/src:/app/src"
+    depends_on:
+      - db
+      - migration
+
+  migration:
+    build:
+      context: ./migration
+      dockerfile: Dockerfile
+    env_file:
+      - ./config/env/local
+    links:
+      - db:db.local.chatops.in
+    volumes:
+      - "./migration:/app"
     depends_on:
       - db
 

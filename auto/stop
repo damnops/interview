@@ -3,6 +3,6 @@
 
 cd $(dirname $0)/..
 
-export PROJECTNAME=${PROJECTNAME:-localdev}
+export PROJECTNAME=${PROJECTNAME:-devops}
 
 docker-compose --project-name ${PROJECTNAME} stop

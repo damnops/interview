@@ -1,0 +1,11 @@
+#!/bin/bash 
+
+echo "Trying to connect to ${DB_HOST} ..."
+while ! mysql -h${DB_HOST} -u${DB_USER} -p${DB_PASSWORD} -e "show databases;" 1>/dev/null
+do
+  echo "Failed to connect to ${DB_HOST}, trying again in 3 seconds..."
+  sleep 3
+done
+echo "Database connection successful. Continuing..."
+
+exec $@

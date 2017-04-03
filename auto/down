@@ -2,6 +2,6 @@
 #
 cd $(dirname $0)/..
 
-export PROJECTNAME=${1:-${PROJECTNAME:-localdev}}
+export PROJECTNAME=${1:-${PROJECTNAME:-devops}}
 
 docker-compose --project-name ${PROJECTNAME} down --volumes --remove-orphans
