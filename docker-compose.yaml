@@ -1,0 +1,24 @@
+version: '2'
+services:
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    env_file:
+      - ./config/env/local
+    links:
+      - db:db.local.chatops.in
+    volumes:
+      - "app/:/opt/devops/app"
+    depends_on:
+      - db
+
+  db:
+    image: "mysql:5.5.53"
+    privileged: true
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./config/env/local

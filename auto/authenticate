@@ -1,0 +1,10 @@
+#!/bin/bash -ev
+
+cd $(dirname $0)/..
+source ./auto/functions
+
+USER="phoenixzhu"
+PASS=""
+
+display_status "Login to registry"
+docker login -u ${USER} -p ${PASS}

@@ -1,0 +1,11 @@
+#! /bin/bash -e
+#
+
+cd $(dirname $0)/..
+
+export PROJECTNAME=${PROJECTNAME:-localdev}
+RUNLIST="app db"
+
+for r in ${RUNLIST}; do
+  docker-compose --project-name ${PROJECTNAME} start ${r}
+done

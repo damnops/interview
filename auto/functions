@@ -1,0 +1,3 @@
+display_status() {
+  echo ">>> $1 <<<" 1>&2
+}

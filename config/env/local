@@ -1,0 +1,5 @@
+DB_HOST=db.local.chatops.in
+DB_NAME=noone
+DB_USER=root
+DB_PASSWORD=allmenmustdie
+MYSQL_ROOT_PASSWORD=allmenmustdie

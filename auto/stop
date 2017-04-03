@@ -1,0 +1,8 @@
+#! /bin/bash -e
+#
+
+cd $(dirname $0)/..
+
+export PROJECTNAME=${PROJECTNAME:-localdev}
+
+docker-compose --project-name ${PROJECTNAME} stop
