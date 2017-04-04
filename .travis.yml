@@ -3,5 +3,5 @@ services:
   
 script: 
   - ./auto/build
-  - ./auto/authentication
+  - ./auto/authenticate
   - ./auto/release
