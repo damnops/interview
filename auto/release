@@ -1,0 +1,21 @@
+#!/bin/bash -ev
+
+cd $(dirname $0)/..
+source ./auto/functions
+
+IMAGE_NAME="phpdemo"
+REPO_PREFIX="devopssession"
+TAG_SHORT_HASH=$(git rev-parse --verify --short=7 HEAD)
+TAG_HASH=$(git rev-parse --verify HEAD)
+
+# Build the image
+(cd build/docker && docker build -t ${REPO_PREFIX}/${IMAGE_NAME} .)
+
+# Release
+display_status "Release to registry"
+docker tag ${REPO_PREFIX}/${IMAGE_NAME} ${REPO_PREFIX}/${IMAGE_NAME}:${TAG_SHORT_HASH}
+docker tag ${REPO_PREFIX}/${IMAGE_NAME} ${REPO_PREFIX}/${IMAGE_NAME}:${TAG_HASH}
+docker push ${REPO_PREFIX}/${IMAGE_NAME}
+docker push ${REPO_PREFIX}/${IMAGE_NAME}:${TAG_SHORT_HASH}
+docker push ${REPO_PREFIX}/${IMAGE_NAME}:${TAG_HASH}
+display_status "Pushed docker image ${REPO_PREFIX}/${IMAGE_NAME} with tags ${TAG_SHORT_HASH}, ${TAG_HASH}, latest"

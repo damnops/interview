@@ -3,8 +3,7 @@
 cd $(dirname $0)/..
 source ./auto/functions
 
-USER="phoenixzhu"
-PASS=""
+source ./.credential
 
 display_status "Login to registry"
-docker login -u ${USER} -p ${PASS}
+docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
