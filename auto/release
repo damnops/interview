@@ -3,13 +3,13 @@
 cd $(dirname $0)/..
 source ./auto/functions
 
-IMAGE_NAME="phpdemo"
+IMAGE_NAME="ip2citydemo"
 REPO_PREFIX="devopssession"
 TAG_SHORT_HASH=$(git rev-parse --verify --short=7 HEAD)
 TAG_HASH=$(git rev-parse --verify HEAD)
 
 # Build the image
-(cd build/docker && docker build -t ${REPO_PREFIX}/${IMAGE_NAME} .)
+docker build -t ${REPO_PREFIX}/${IMAGE_NAME} app
 
 # Release
 display_status "Release to registry"

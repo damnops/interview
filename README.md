@@ -1,4 +1,6 @@
-# DevOps Practice
+# DevOps Practice 
+
+![Build Status](https://travis-ci.org/phoenix-zhu/devops-practice.svg?branch=master)
 
 This repo shows how we do DevOps practices with Docker.
 
