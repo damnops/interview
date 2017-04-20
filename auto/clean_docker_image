@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+docker image ls "devops_*" | awk '$1!~/REPOSITORY/ {print $3}' | xargs docker image rm -f
