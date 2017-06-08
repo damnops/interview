@@ -37,7 +37,7 @@ $start = rand();
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT ipFROM, ipTO, countryName, countryCode FROM ip2city where ipFROM > $start limit 20"); 
+    $stmt = $conn->prepare("SELECT ipFROM, ipTO, countryName, countryCode FROM ip2city where ipFROM > $start limit 10"); 
     $stmt->execute();
 
     // set the resulting array to associative
