@@ -2,8 +2,7 @@
 #
 
 cd $(dirname $0)/..
-
-export PROJECTNAME=${PROJECTNAME:-devops}
+source ./auto/functions
 
 ./auto/down
 ./auto/up

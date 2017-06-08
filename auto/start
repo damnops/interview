@@ -2,8 +2,8 @@
 #
 
 cd $(dirname $0)/..
+source ./auto/functions
 
-export PROJECTNAME=${PROJECTNAME:-devops}
 RUNLIST="app db"
 
 for r in ${RUNLIST}; do

@@ -1,7 +1,6 @@
 #! /bin/bash -e
 #
 cd $(dirname $0)/..
-
-export PROJECTNAME=${1:-${PROJECTNAME:-devops}}
+source ./auto/functions
 
 docker-compose --project-name ${PROJECTNAME} down --volumes --remove-orphans

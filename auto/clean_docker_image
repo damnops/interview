@@ -1,3 +1,6 @@
 #!/bin/bash -e
 
-docker image ls "devops_*" | awk '$1!~/REPOSITORY/ {print $3}' | xargs docker image rm -f
+cd $(dirname $0)/..
+source ./auto/functions
+
+docker image ls "${PROJECTNAME}_*" | awk '$1!~/REPOSITORY/ {print $3}' | xargs docker image rm -f
