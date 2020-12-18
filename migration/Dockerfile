@@ -1,5 +1,4 @@
-FROM mysql:5.5.53
-MAINTAINER "Zhu Ye" <phoenix_zhu@outlook.com>
+FROM mysql:5.7
 
 WORKDIR /app
 

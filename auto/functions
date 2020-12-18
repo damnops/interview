@@ -1,5 +1,0 @@
-export PROJECTNAME=${PROJECTNAME:-devops}
-
-display_status() {
-  echo ">>> $1 <<<" 1>&2
-}

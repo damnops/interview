@@ -1,7 +1,7 @@
 #!/bin/bash -ev
 
 cd $(dirname $0)/..
-source ./auto/functions
+source ./auto/set-env-helpers
 
 source ./.credential
 

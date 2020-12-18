@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
 cd $(dirname $0)/..
-source ./auto/functions
+source ./auto/set-env-helpers
 
 docker image ls "${PROJECTNAME}_*" | awk '$1!~/REPOSITORY/ {print $3}' | xargs docker image rm -f

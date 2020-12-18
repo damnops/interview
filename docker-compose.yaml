@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   app:
     build:
@@ -8,10 +8,8 @@ services:
       - "80:80"
     env_file:
       - ./config/env/local
-    links:
-      - db:db.local.chatops.in
-    volumes:
-      - "./app/src:/app/src"
+    # volumes:
+    #   - "./app/src:/app/src"
     depends_on:
       - db
       - migration
@@ -20,19 +18,25 @@ services:
     build:
       context: ./migration
       dockerfile: Dockerfile
+    networks:
+      - backend
     env_file:
       - ./config/env/local
-    links:
-      - db:db.local.chatops.in
     volumes:
       - "./migration:/app"
     depends_on:
       - db
 
   db:
-    image: "mysql:5.5.53"
+    image: "mysql:5.7"
     privileged: true
+    networks:
+      - backend
     ports:
       - "3306:3306"
     env_file:
       - ./config/env/local
+
+networks:
+  backend:
+    driver: bridge

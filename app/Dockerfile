@@ -1,13 +1,22 @@
-FROM php:7.1-apache
-MAINTAINER "Zhu Ye" <phoenix_zhu@outlook.com>
+FROM php:8.0-apache
+
+ENV APP_DIR=/app
 
 RUN docker-php-ext-install pdo_mysql
 COPY apache/ /etc/apache2/sites-enabled/
 
-WORKDIR /app
+WORKDIR ${APP_DIR}
 
 COPY entrypoint .
-COPY src .
+COPY src src
+
+VOLUME ${APP_DIR}
+
+ARG GIT_HASH=xxxxxxx
+ARG TAG_TIME=194910010000
+
+RUN for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
 
 ENTRYPOINT ["/app/entrypoint"]
-CMD ["/app/run"]
+
+CMD ["/usr/sbin/apache2", "-DFOREGROUND"]

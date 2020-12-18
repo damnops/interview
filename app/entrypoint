@@ -1,9 +1,16 @@
-#!/bin/bash -ev
+#!/bin/bash -e
 
 export APACHE_LOG_DIR=${APACHE_LOG_DIR:-/var/log/apache2}
 export APACHE_RUN_GROUP=${APACHE_RUN_GROUP:-www-data}
 export APACHE_RUN_USER=${APACHE_RUN_USER:-www-data}
 export APACHE_PID_FILE=${APACHE_PID_FILE:-/var/run/apache2/apache2.pid}
 export APACHE_LOCK_DIR=${APACHE_LOCK_DIR:-/var/lock/apache2}
+export APACHE_RUN_DIR=${APACHE_RUN_DIR:-/var/run/apache2}
 
-exec /usr/sbin/apache2 -DFOREGROUND
+APP_DIR=${APP_DIR:-/app}
+
+for i in $(find ${APP_DIR} -type f -name '*.php'); 
+    do echo "Host: $(hostname)<br/>" >> $i; 
+done
+
+exec $@

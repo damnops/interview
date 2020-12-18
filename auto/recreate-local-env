@@ -1,0 +1,8 @@
+#! /bin/bash -e
+#
+
+cd $(dirname $0)/..
+source ./auto/set-env-helpers
+
+./auto/clean-local-env
+./auto/run-local-env

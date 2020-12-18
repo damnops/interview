@@ -18,4 +18,4 @@ This repo shows how we do DevOps practices with Docker.
   ```
   ./auto/up
   ```
-  After the initialization process is successful done, you can access your local environment via [app.local.chatops.in](http://app.local.chatops.in) in your browser.
+  After the initialization process is successful done, you can access your local environment via [joi.local.toc-platform.com](http://joi.local.toc-platform.com) in your browser.

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 #
 cd $(dirname $0)/..
-source ./auto/functions
+source ./auto/set-env-helpers
 
 docker-compose --project-name ${PROJECTNAME} down --volumes --remove-orphans

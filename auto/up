@@ -1,7 +1,0 @@
-#! /bin/bash -e
-#
-
-cd $(dirname $0)/..
-source ./auto/functions
-
-docker-compose --project-name ${PROJECTNAME} up -d app

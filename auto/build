@@ -1,7 +1,0 @@
-#!/bin/bash -ev
-
-cd $(dirname $0)/..
-source ./auto/functions
-
-# build image
-docker build app

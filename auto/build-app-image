@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+source ./auto/set-env-helpers
+
+# build image
+docker build \
+  --build-arg GIT_HASH=${GIT_HASH} \
+  --build-arg TAG_TIME=${TAG_TIME} \
+  -t ${PROJECTNAME}-app app

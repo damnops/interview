@@ -2,7 +2,7 @@
 #
 
 cd $(dirname $0)/..
-source ./auto/functions
+source ./auto/set-env-helpers
 
 RUNLIST="app db"
 

@@ -28,7 +28,7 @@ class TableRows extends RecursiveIteratorIterator {
     } 
 } 
 
-$servername = $_ENV['DB_HOST']; #"db.local.chatops.in";
+$servername = $_ENV['DB_HOST']; #"db.joi.local.toc-platform.com";
 $dbname = $_ENV['DB_NAME']; #"devops";
 $username = $_ENV['DB_USER']; #"iamnoone";
 $password = $_ENV['DB_PASSWORD']; #"allmenmustdie";
