@@ -1,21 +1,16 @@
-# DevOps Practice 
+# Interview
 
-![Build Status](https://travis-ci.org/phoenix-zhu/devops-practice.svg?branch=master)
-
-This repo shows how we do DevOps practices with Docker.
+This repo is used for devops interview.
 
 ## Prerequisite
 * [docker](https://docs.docker.com/engine/installation/mac/#/docker-toolbox)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
 ## Instructions
-1. **Code-base preparation**
 
-  Clone the codebase to your local.
-
-2. **Startup your new local environment**
+**Init your new local environment**
 
   ```
-  ./auto/up
+  ./auto/run-local-env
   ```
   After the initialization process is successful done, you can access your local environment via [joi.local.toc-platform.com](http://joi.local.toc-platform.com) in your browser.
