@@ -2,9 +2,3 @@
 
 # OSX files
 **/.DS_Store
-
-*/.terraform
-*/terraform.tfvars
-*/*.tfstate
-*/*.tfstate.backup
-*/*.hcl
