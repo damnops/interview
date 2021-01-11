@@ -7,6 +7,8 @@ export APACHE_PID_FILE=${APACHE_PID_FILE:-/var/run/apache2/apache2.pid}
 export APACHE_LOCK_DIR=${APACHE_LOCK_DIR:-/var/lock/apache2}
 export APACHE_RUN_DIR=${APACHE_RUN_DIR:-/var/run/apache2}
 
+ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+
 APP_DIR=${APP_DIR:-/app}
 
 for i in $(find ${APP_DIR} -type f -name '*.php'); 

@@ -1,7 +1,0 @@
-#! /bin/bash -e
-#
-
-cd $(dirname $0)/..
-source ./auto/set-env-helpers
-
-docker-compose --project-name ${PROJECTNAME} stop

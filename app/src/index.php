@@ -5,7 +5,7 @@
        table th, table td { 
           border:solid #999; border-width:0 1px 1px 0;padding:5px; 
        } 
-    </style> 
+</style> 
     
 <table style='border: solid 1px black;'>
 <tr><th>ipFrom</th><th>ipTo</th><th>Country</th><th>countryCode</th></tr>
@@ -28,16 +28,16 @@ class TableRows extends RecursiveIteratorIterator {
     } 
 } 
 
-$servername = $_ENV['DB_HOST']; #"db.joi.local.toc-platform.com";
-$dbname = $_ENV['DB_NAME']; #"devops";
-$username = $_ENV['DB_USER']; #"iamnoone";
-$password = $_ENV['DB_PASSWORD']; #"allmenmustdie";
+$servername = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME']; 
+$username = $_ENV['DB_USER']; 
+$password = $_ENV['DB_PASSWORD']; 
 $start = rand();
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT ipFROM, ipTO, countryName, countryCode FROM ip2city where ipFROM > $start limit 20"); 
+    $stmt = $conn->prepare("SELECT ipFROM, ipTO, countryName, countryCode FROM ip2city where ipFROM > $start limit 10"); 
     $stmt->execute();
 
     // set the resulting array to associative
