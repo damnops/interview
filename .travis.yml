@@ -1,7 +1,0 @@
-services:
-  - docker
-  
-script: 
-  - ./auto/build
-  - ./auto/authenticate
-  - ./auto/release

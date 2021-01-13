@@ -1,4 +1,7 @@
 .vscode
-
-# OSX files
-**/.DS_Store
+.DS_Store
+.credential
+.terraform*
+terraform.tfstate
+terraform.tfstate.*
+credentials.auto.tfvars

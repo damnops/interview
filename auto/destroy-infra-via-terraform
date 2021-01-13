@@ -1,0 +1,8 @@
+#! /bin/bash -e
+#
+cd $(dirname $0)/..
+source ./auto/set-env-helpers
+
+WORKDIR="/working/terraform/$1"
+
+terraform destroy -auto-approve

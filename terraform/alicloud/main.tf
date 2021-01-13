@@ -71,7 +71,7 @@ resource "alicloud_security_group_rule" "allow_all_tcp" {
 
 resource "alicloud_key_pair" "publickey" {
   key_name   = var.project_name
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWiHmBfiZYcCSAGDkdcWwmduk2ZqptkRQEZEJ0YKla+orjh+0NElsJ0WBMAszc/WevDtyST90NiwhEYPYxyUCAZU+h6TXbaOoVVe8eGwBpEC3X6INFUUR7kVKK5K0mfOm3LalfJASLhSmKhyBGCZJ93bSfg8K0ky0qHIy9igbNLm9PcP6v58MD5wXf2W3bI+5kcj1mjuS8znjtznvwH6z43PfSwyZHpR66Ds/u+PyGiPOXnZIMvEDe3w+Ui/2anIqaN3f+iMbpmiJdzyvCBhMZzd+DKine+erBojAtHOw15yx/8q6v5lkGIYtJvbyTwcl7E85CefcJM6iY73BZQL/N root@MoMo"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDgqFwa0kxsOITam1IGwVOTNbqV+DSRKZBmBzpo/zaJFkm5SuiZoY+uAJD0vSCZ4EbSNcvAiosIHm+DP7+1ajWRpSKieAtxcW5dfFA6SBSWbQSxe0Ldk6ntIzR40gz+/0sV3/Nh14qncoOocEOWGCwlNHmo+VngSmuU3ulpTQvk8dvYFUSDkcb0BgKfrtBTgZNTfP91w2XJqJfto05KmfdQDKzbhxOkQIISEDF6Fqout8gK9/1NlFJ38TfIfjuNLrGVcFV3T1M0REyI8pUBn5NEEIkWMO5Gec3KojqUAWD52+IgOOoBUB4ktj/7Xy3DNCIBx09vTjFaDYhC2sx8Eoc/"
 }
 
 
@@ -89,6 +89,26 @@ resource "alicloud_instance" "instance" {
   key_name                   = alicloud_key_pair.publickey.id
   user_data                  = local.user_data
   private_ip                 = "172.16.1.2"
+  # provisioner "remote-exec" {
+  #   connection {
+  #     type = "ssh"
+  #     user = "root"
+  #     host = self.public_ip
+  #     timeout = "25m"
+  #   }
+  #   inline = [
+  #     "cloud-init status --wait"
+  #   ]
+  # }
+  # provisioner "file" {
+  #   connection {
+  #     type = "ssh"
+  #     user = "root"
+  #     host = self.public_ip
+  #   }
+  #   source      = "/etc/kubernetes/admin.kubeconfig"
+  #   destination = "./kubeconfig"
+  # }
 }
 
 
@@ -98,7 +118,7 @@ locals {
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 yum install git make vim -y
-git clone https://gitee.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
+git clone https://gitee.com/toc-lib/kube-ansible.git /usr/local/src/kube-ansible
 pushd /usr/local/src/kube-ansible
 cp group_vars/allinone.yml group_vars/all.yml
 cp inventory/allinone.template inventory/hosts

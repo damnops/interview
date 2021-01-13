@@ -8,3 +8,10 @@ PROJECTNAME=${PROJECTNAME:-joi}
 display_status() {
   echo ">>> $1 <<<" 1>&2
 }
+
+function terraform() {
+  docker run --rm \
+  -v $(pwd):/working \
+  -w ${WORKDIR} \
+  hashicorp/terraform $@
+}
