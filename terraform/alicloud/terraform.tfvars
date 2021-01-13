@@ -1,2 +1,2 @@
-region     = "cn-beijing"
+region       = "cn-beijing"
 project_name = "kubernetes"

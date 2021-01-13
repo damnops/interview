@@ -71,7 +71,7 @@ resource "alicloud_security_group_rule" "allow_all_tcp" {
 
 resource "alicloud_key_pair" "publickey" {
   key_name   = var.project_name
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDgqFwa0kxsOITam1IGwVOTNbqV+DSRKZBmBzpo/zaJFkm5SuiZoY+uAJD0vSCZ4EbSNcvAiosIHm+DP7+1ajWRpSKieAtxcW5dfFA6SBSWbQSxe0Ldk6ntIzR40gz+/0sV3/Nh14qncoOocEOWGCwlNHmo+VngSmuU3ulpTQvk8dvYFUSDkcb0BgKfrtBTgZNTfP91w2XJqJfto05KmfdQDKzbhxOkQIISEDF6Fqout8gK9/1NlFJ38TfIfjuNLrGVcFV3T1M0REyI8pUBn5NEEIkWMO5Gec3KojqUAWD52+IgOOoBUB4ktj/7Xy3DNCIBx09vTjFaDYhC2sx8Eoc/"
+  public_key = file("${path.module}/id_rsa.pub")
 }
 
 
@@ -89,26 +89,24 @@ resource "alicloud_instance" "instance" {
   key_name                   = alicloud_key_pair.publickey.id
   user_data                  = local.user_data
   private_ip                 = "172.16.1.2"
-  # provisioner "remote-exec" {
-  #   connection {
-  #     type = "ssh"
-  #     user = "root"
-  #     host = self.public_ip
-  #     timeout = "25m"
-  #   }
-  #   inline = [
-  #     "cloud-init status --wait"
-  #   ]
-  # }
-  # provisioner "file" {
-  #   connection {
-  #     type = "ssh"
-  #     user = "root"
-  #     host = self.public_ip
-  #   }
-  #   source      = "/etc/kubernetes/admin.kubeconfig"
-  #   destination = "./kubeconfig"
-  # }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "root"
+      host        = self.public_ip
+      timeout     = "15m"
+      private_key = file("${path.module}/id_rsa")
+    }
+    inline = [
+      "time cloud-init status -w -l",
+      "cp /etc/kubernetes/admin.kubeconfig /tmp/admin.kubeconfig",
+      "sed -i 's/172.16.1.2/kubernetes.test.local/g' /tmp/admin.kubeconfig"
+    ]
+  }
+  provisioner "local-exec" {
+    command = "scp -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${self.public_ip}:/tmp/admin.kubeconfig ./kubeconfig"
+  }
 }
 
 
@@ -126,4 +124,15 @@ make runtime
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
 popd
 EOF
+}
+
+#===============================================================================
+# Output
+#===============================================================================
+output "public_ip" {
+  value = alicloud_instance.instance.public_ip
+}
+
+output "message" {
+  value = "please add host : ${alicloud_instance.instance.public_ip} kubernetes.test.local"
 }
