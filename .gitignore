@@ -5,3 +5,6 @@
 terraform.tfstate
 terraform.tfstate.*
 credentials.auto.tfvars
+id_rsa
+id_rsa.pub
+kubeconfig

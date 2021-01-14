@@ -101,7 +101,7 @@ resource "alicloud_instance" "instance" {
     inline = [
       "time cloud-init status -w -l",
       "cp /etc/kubernetes/admin.kubeconfig /tmp/admin.kubeconfig",
-      "sed -i 's/172.16.1.2/kubernetes.test.local/g' /tmp/admin.kubeconfig"
+      "sed -i \"s/172.16.1.2/$(curl -s www.pubyun.com/dyndns/getip)/g\" /tmp/admin.kubeconfig"
     ]
   }
   provisioner "local-exec" {
@@ -113,12 +113,19 @@ resource "alicloud_instance" "instance" {
 locals {
   user_data = <<EOF
 #!/bin/bash
+wget http://artifact.splunk.org.cn//yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
+chmod +x /usr/bin/yq
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 yum install git make vim -y
 git clone https://gitee.com/toc-lib/kube-ansible.git /usr/local/src/kube-ansible
 pushd /usr/local/src/kube-ansible
-cp group_vars/allinone.yml group_vars/all.yml
+cp group_vars/template.yml group_vars/all.yml
+IP=$(curl -s www.pubyun.com/dyndns/getip)
+yq eval --inplace "(.kubernetes.ssl.extension.[0]) = \"$IP\"" group_vars/all.yml
+yq eval --inplace '(.kubernetes.addon.image.metrics) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/metrics-server-amd64:v0.3.6"' group_vars/all.yml
+yq eval --inplace '(.kubernetes.addon.image.flannel) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/flannel:v0.12.0"' group_vars/all.yml
+yq eval --inplace '(.kubernetes.addon.image.canal.flannel) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/flannel:v0.12.0"' group_vars/all.yml
 cp inventory/allinone.template inventory/hosts
 make runtime
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
@@ -131,8 +138,4 @@ EOF
 #===============================================================================
 output "public_ip" {
   value = alicloud_instance.instance.public_ip
-}
-
-output "message" {
-  value = "please add host : ${alicloud_instance.instance.public_ip} kubernetes.test.local"
 }
