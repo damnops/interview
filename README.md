@@ -15,7 +15,7 @@ This repo is used for devops interview.
   ```
   After the initialization process is successful done, you can access your local environment via [joi.local.toc-platform.com](http://joi.local.toc-platform.com) in your browser.
 
-**Provision infrastucture**
+**Provision infrastructure**
 
   ```
   ./auto/provison-infra-via-terraform {CLOUD_PROVIDER}
@@ -30,9 +30,9 @@ This repo is used for devops interview.
   Remember to put your access id & secret key pair in a `credentials.auto.tfvars` file, this filename is added in the .gitignore, or else it might be uploaded to remote repo.
 
 
-**Provision infrastucture**
+**Destroy infrastructure**
 
   ```
   ./auto/destroy-infra-via-terraform {CLOUD_PROVIDER}
   ```
-  Destroy the infrastucture which created by the provision scripts, you can also use the extended script.
+  Destroy the infrastructure which created by the provision scripts, you can also use the extended script.
