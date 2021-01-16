@@ -3,8 +3,6 @@
 APP_NAME="app"
 MIGRATION_NAME="migration"
 REPO_PREFIX="joidevops"
-DOCKER_USER=${DOCKER_USER:-toc2019}
-DOCKER_PASS=${DOCKER_PASS:-HearMeRoar}
 GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
 PROJECT_NAME=${PROJECT_NAME:-joi}
@@ -16,8 +14,8 @@ display_status() {
 
 function terraform() {
   docker run --rm \
-  -v $(pwd):/working \
-  -w ${WORKDIR} \
+  -v ${PWD}:/working \
+  -w /working \
   hashicorp/terraform $@
 }
 
@@ -31,7 +29,7 @@ function kubectl() {
 
 function kustomize() {
   docker run --rm \
-  -v $(pwd)/k8s:/working \
+  -v ${PWD}/k8s:/working \
   -w /working \
   bitlayer/kustomize:v2.1.0 $@
 }
