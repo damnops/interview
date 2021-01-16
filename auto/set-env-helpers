@@ -1,9 +1,14 @@
 #!/bin/bash -e
 
+APP_NAME="app"
+MIGRATION_NAME="migration"
+REPO_PREFIX="joidevops"
+DOCKER_USER=${DOCKER_USER:-toc2019}
+DOCKER_PASS=${DOCKER_PASS:-HearMeRoar}
 GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
-IMAGE_NAME="devops-joi"
-PROJECTNAME=${PROJECTNAME:-joi}
+PROJECT_NAME=${PROJECT_NAME:-joi}
+KUBE_CONFILE="./config/kube-config.txt"
 
 display_status() {
   echo ">>> $1 <<<" 1>&2
@@ -14,4 +19,19 @@ function terraform() {
   -v $(pwd):/working \
   -w ${WORKDIR} \
   hashicorp/terraform $@
+}
+
+function kubectl() {
+  docker run --rm \
+  -v ${PWD}/${KUBE_CONFILE}:/.kube/config \
+  -v ${PWD}:/working \
+  -w /working \
+  bitnami/kubectl $@
+}
+
+function kustomize() {
+  docker run --rm \
+  -v $(pwd)/k8s:/working \
+  -w /working \
+  bitlayer/kustomize:v2.1.0 $@
 }

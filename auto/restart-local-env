@@ -4,8 +4,6 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-RUNLIST="app db"
-
-for r in ${RUNLIST}; do
-  docker-compose --project-name ${PROJECTNAME} restart ${r}
-done
+auto/stop-local-env
+auto/build-docker-images
+auto/start-local-env

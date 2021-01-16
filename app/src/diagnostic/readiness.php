@@ -1,4 +1,5 @@
 <?php
+header("HTTP/1.1 500 Readiness Check Failed");
 $servername = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_NAME']; 
 $username = $_ENV['DB_USER']; 
@@ -11,11 +12,11 @@ try {
   $stmt = $conn->prepare("SELECT * FROM ip2city limit 1"); 
   $stmt->execute();
   $checkResult["dbConnection"] = "OK";
+  header("HTTP/1.1 200 OK");
 }
-catch(PDOException $e) {
+catch(Exception $e) {
   $checkResult["status"] = "Failed!";
   $checkResult["dbConnection"] = $e->getMessage();
-  header("HTTP/1.1 500 Readiness Check Failed");
 }
 $conn = null;
 
