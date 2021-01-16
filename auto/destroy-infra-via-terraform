@@ -3,6 +3,6 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-WORKDIR="/working/terraform/$1"
+CONF_DIR="./terraform/$1"
 
-terraform destroy -auto-approve
+terraform -chdir=${CONF_DIR} destroy -auto-approve

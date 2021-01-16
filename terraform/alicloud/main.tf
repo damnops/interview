@@ -1,20 +1,4 @@
 #===============================================================================
-# Backend
-#===============================================================================
-# terraform {
-#   backend "s3" {
-#     region                      = "minio"
-#     force_path_style            = true
-#     skip_credentials_validation = true
-#     skip_metadata_api_check     = true
-#     skip_region_validation      = true
-#     # skip_requesting_account_id  = true
-#     # skip_get_ec2_platforms      = true
-#   }
-# }
-
-
-#===============================================================================
 # Provider
 #===============================================================================
 provider "alicloud" {
@@ -71,7 +55,7 @@ resource "alicloud_security_group_rule" "allow_all_tcp" {
 
 resource "alicloud_key_pair" "publickey" {
   key_name   = var.project_name
-  public_key = file("${path.module}/id_rsa.pub")
+  public_key = file("${path.module}/tmp/id_rsa.pub")
 }
 
 
@@ -96,16 +80,16 @@ resource "alicloud_instance" "instance" {
       user        = "root"
       host        = self.public_ip
       timeout     = "15m"
-      private_key = file("${path.module}/id_rsa")
+      private_key = file("${path.module}/tmp/id_rsa")
     }
     inline = [
       "time cloud-init status -w -l",
       "cp /etc/kubernetes/admin.kubeconfig /tmp/admin.kubeconfig",
-      "sed -i \"s/172.16.1.2/$(curl -s www.pubyun.com/dyndns/getip)/g\" /tmp/admin.kubeconfig"
+      "sed -i \"s/172.16.1.2/${self.public_ip}/g\" /tmp/admin.kubeconfig"
     ]
   }
   provisioner "local-exec" {
-    command = "scp -i id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${self.public_ip}:/tmp/admin.kubeconfig ./kubeconfig"
+    command = "scp -i ./tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kube-config.txt"
   }
 }
 

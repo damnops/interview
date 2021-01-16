@@ -3,7 +3,11 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-WORKDIR="/working/terraform/$1"
+CONF_DIR="./terraform/$1"
+mkdir -p ${CONF_DIR}/tmp
+ssh-keygen -t rsa -P "" -f ${CONF_DIR}/tmp/id_rsa <<<y 2>&1 >/dev/null
 
-terraform init
-terraform apply -auto-approve
+terraform -chdir=${CONF_DIR} init
+terraform -chdir=${CONF_DIR} apply -auto-approve
+
+cp ${CONF_DIR}/tmp/kube-config.txt config/kube-config.txt
