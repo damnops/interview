@@ -1,9 +1,7 @@
-#!/bin/bash -ev
+#!/bin/bash -e
 
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
-
-source ./.credential
 
 display_status "Login to registry"
 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
