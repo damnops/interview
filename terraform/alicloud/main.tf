@@ -126,6 +126,7 @@ yq eval --inplace "(.kubernetes.ssl.extension.[0]) = \"$IP\"" group_vars/all.yml
 yq eval --inplace '(.kubernetes.addon.image.metrics) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/metrics-server-amd64:v0.3.6"' group_vars/all.yml
 yq eval --inplace '(.kubernetes.addon.image.flannel) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/flannel:v0.12.0"' group_vars/all.yml
 yq eval --inplace '(.kubernetes.addon.image.canal.flannel) = "registry.cn-beijing.aliyuncs.com/kubernetes_mirror_2021/flannel:v0.12.0"' group_vars/all.yml
+yq eval --inplace '(.kubernetes.settings.master_run_pod) = "true"' group_vars/all.yml
 cp inventory/allinone.template inventory/hosts
 make runtime
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
