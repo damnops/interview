@@ -18,8 +18,8 @@ jobs:
       uses: aliyun/acr-login@v1
       with:
       login-server: https://registry.cn-beijing.aliyuncs.com
-      access-key-id: "${{ secrets.DOCKER_USER }}"
-      access-key-secret: "${{ secrets.DOCKER_PASS }}"
+      username: "${{ secrets.DOCKER_USER }}"
+      password: "${{ secrets.DOCKER_PASS }}"
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
