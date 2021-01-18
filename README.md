@@ -29,22 +29,24 @@ This repo is used for devops interview.
 
   Remember to put your access id & secret key pair in `credentials.auto.tfvars` file, this filename is added in the .gitignore, or else it might be uploaded to remote repo.
 
-**Setup kubectl config**
-  After the provision infrastructure step is done, we should have a workable k8s cluster. Run following script to download the kube config file from remote and set for auto scripts.
+**Setup kubectl config for aws k8s**
+
+  After the provision infrastructure step is done, we should have a workable k8s cluster. Aliyun provision step will do this, but for AWS, we need to run the following script to download the kube config file.
   ```
-  ./auto/setup-kube-config {KUBE_CONFIG_URL}
+  ./auto/setup-kube-config-for-aws
   ```
-  You can use the extended script to download config file from specific provider. The config file will be set as `config/kube-config.txt`
+  The config file will be set as `config/kube-config.txt`, if there are something wrong with k8s cluster control via kubectl, check this file.
 
 **Build and release docker images**
+
+  Update the docker registry credential in the `config/cr-credential` and run following script, it will push docker images to docker hub.
   ```
-  export DOCKER_USER=xxx
-  export DOCKER_PASS=xxx
-  ./auto/release-docker-images
+  ./auto/auth-with-dockerhub
   ```
-  Export the dockerhub credentials and run the release script, it will push docker images to docker hub.
+  Since it's very slow to pull image from docker hub with China networking, we have an ali docker registry, use `auto/auth-with-ali-cr` to auth.
 
 **Deploy application to k8s**
+
   ```
   ./auto/deploy-to-k8s
   ```

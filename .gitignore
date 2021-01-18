@@ -10,3 +10,5 @@ id_rsa.pub
 kubeconfig
 kustomize-output.yaml
 kube-config.txt
+tmp
+cr-credential

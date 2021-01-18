@@ -3,4 +3,4 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-./auto/setup-kube-config http://devops.joi.toc-platform.com:30000/kube-config.txt
+curl -qs -o ${KUBE_CONFILE} $1 http://devops.joi.toc-platform.com:30000/kube-config.txt
