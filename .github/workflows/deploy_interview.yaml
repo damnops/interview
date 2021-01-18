@@ -5,7 +5,7 @@ on:
     branches:
     - main
 env:
-  REGION_ID: cn-beijing
+  LOGIN_SERVER: https://registry.cn-beijing.aliyuncs.com
 
 jobs:
   release-docker-images-to-ali:
@@ -19,9 +19,9 @@ jobs:
     - name: Login to ACR with the AccessKey pair
       uses: aliyun/acr-login@v1
       with:
-        region-id: "${{ env.REGION_ID }}"
-        access-key-id: "${{ secrets.ALICR_USER }}"
-        access-key-secret: "${{ secrets.ALICR_PASS }}"
+        login-server: "${{ env.LOGIN_SERVER }}"
+        username: "${{ secrets.ALICR_USER }}"
+        password: "${{ secrets.ALICR_PASS }}"
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to ACR
