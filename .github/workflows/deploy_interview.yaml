@@ -1,0 +1,47 @@
+name: deploy_interview
+
+on:
+  push:
+    branches:
+    - main
+env:
+  REGION_ID: cn-beijing
+
+jobs:
+  release-docker-images-to-ali:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # 1.1 Login to ACR
+    - name: Login to ACR with the AccessKey pair
+      uses: aliyun/acr-login@v1
+      with:
+        region-id: "${{ env.REGION_ID }}"
+        access-key-id: "${{ secrets.DOCKER_USER }}"
+        access-key-secret: "${{ secrets.DOCKER_PASS }}"
+
+    # 1.2 Buid and push image to ACR
+    - name: Build and push image to ACR
+      run: |
+        ./auto/release-docker-images-to-ali
+
+  release-docker-images-to-dockerhub:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # 1.1 Login to Dockerhub
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: "${{ secrets.DOCKER_USER }}"
+        password: "${{ secrets.DOCKER_PASS }}"
+    # 1.2 Buid and push image to Dockerhub
+    - name: Build and push image to DockerHub
+      run: |
+        ./auto/release-docker-images-to-dockerhub
