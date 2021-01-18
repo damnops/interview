@@ -20,8 +20,8 @@ jobs:
       uses: aliyun/acr-login@v1
       with:
         region-id: "${{ env.REGION_ID }}"
-        access-key-id: "${{ secrets.DOCKER_USER }}"
-        access-key-secret: "${{ secrets.DOCKER_PASS }}"
+        access-key-id: "${{ secrets.ALICR_USER }}"
+        access-key-secret: "${{ secrets.ALICR_PASS }}"
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to ACR
