@@ -14,13 +14,12 @@ jobs:
       uses: actions/checkout@v2
 
     # 1.1 Login to ACR
-    - name: Login to DockerHub
+    - name: Login to ACR
       uses: aliyun/acr-login@v1
       with:
-      login-server: https://registry.cn-beijing.aliyuncs.com
-      username: "${{ secrets.DOCKER_USER }}"
-      password: "${{ secrets.DOCKER_PASS }}"
-
+      region-id: cn-beijing
+      access-key-id: "${{ secrets.DOCKER_USER }}"
+      access-key-secret: "${{ secrets.DOCKER_PASS }}"
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
       run: |
@@ -39,7 +38,6 @@ jobs:
       with:
         username: "${{ secrets.DOCKER_USER }}"
         password: "${{ secrets.DOCKER_PASS }}"
-
     # 1.2 Buid and push image to Dockerhub
     - name: Build and push image to DockerHub
       run: |
