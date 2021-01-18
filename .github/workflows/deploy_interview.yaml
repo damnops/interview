@@ -24,7 +24,7 @@ jobs:
         access-key-secret: "${{ secrets.DOCKER_PASS }}"
 
     # 1.2 Buid and push image to ACR
-    - name: Build and push image to DockerHub
+    - name: Build and push image to ACR
       run: |
         ./auto/release-docker-images-to-ali
 
