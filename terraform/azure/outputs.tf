@@ -3,7 +3,7 @@ output "public_ip" {
 }
 
 output "ssh_connection" {
-  value = "ssh azureuser@${azurerm_linux_virtual_machine.this.public_ip_address} -i ${path.cwd}/${path.module}/id_rsa_azure"
+  value = "ssh azureuser@${azurerm_linux_virtual_machine.this.public_ip_address} -i ${path.cwd}/${path.module}/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 }
 
 output "fetch_kubeconfig" {

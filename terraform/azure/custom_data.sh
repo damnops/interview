@@ -3,7 +3,8 @@ sudo -i
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
-wget http://artifact.splunk.org.cn/yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
+wget https://github.com/mikefarah/yq/releases/download/v4.4.1/yq_linux_amd64 -O /usr/bin/yq
+
 chmod +x /usr/bin/yq
 
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
