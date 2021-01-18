@@ -15,7 +15,11 @@ jobs:
 
     # 1.1 Login to ACR
     - name: Login to DockerHub
-      run: ./auto/auth-with-ali-cr
+      uses: aliyun/acr-login@v1
+      with:
+      region-id: "cn-beijing"
+      access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
+      access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
@@ -31,7 +35,10 @@ jobs:
 
     # 1.1 Login to ACR
     - name: Login to DockerHub
-      run: ./auto/auth-with-dockerhub
+      uses: docker/login-action@v1
+      with:
+        username: "${{ secrets.DOCKER_USER }}"
+        password: "${{ secrets.DOCKER_PASS }}"
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
