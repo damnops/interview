@@ -97,7 +97,7 @@ resource "alicloud_instance" "instance" {
 locals {
   user_data = <<EOF
 #!/bin/bash
-wget http://artifact.splunk.org.cn//yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
+wget http://artifact.splunk.org.cn/yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
 chmod +x /usr/bin/yq
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
