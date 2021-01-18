@@ -7,5 +7,5 @@ output "ssh_connection" {
 }
 
 output "fetch_kubeconfig" {
-  value = "scp -i ${path.module}/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@$${azurerm_linux_virtual_machine.this.public_ip_address}:/tmp/admin.kubeconfig ./kubeconfig"
+  value = "scp -i ${path.module}/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@${azurerm_linux_virtual_machine.this.public_ip_address}:/tmp/admin.kubeconfig ./kubeconfig"
 }
