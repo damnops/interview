@@ -22,7 +22,6 @@ jobs:
       run: |
         ./auto/release-docker-images-to-ali
 
-jobs:
   release-docker-images-to-dockerhub:
     runs-on: ubuntu-latest
 
