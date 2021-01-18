@@ -6,7 +6,7 @@ on:
     - pipeline
 
 jobs:
-  build-app-image:
+  release-docker-images-to-ali:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,13 +15,26 @@ jobs:
 
     # 1.1 Login to ACR
     - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: "${{ secrets.DOCKER_USER }}"
-        password: "${{ secrets.DOCKER_PASS }}"
+      run: ./auto/auth-with-ali-cr
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
       run: |
-        bash ./auto/build-docker-images
-        echo upload image
+        ./auto/release-docker-images-to-ali
+
+jobs:
+  release-docker-images-to-dockerhub:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # 1.1 Login to ACR
+    - name: Login to DockerHub
+      run: ./auto/auth-with-dockerhub
+
+    # 1.2 Buid and push image to ACR
+    - name: Build and push image to DockerHub
+      run: |
+        ./auto/release-docker-images-to-dockerhub
