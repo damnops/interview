@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - pipeline
+env:
+  REGION_ID: cn-beijing
 
 jobs:
   release-docker-images-to-ali:
@@ -14,11 +16,13 @@ jobs:
       uses: actions/checkout@v2
 
     # 1.1 Login to ACR
-    - name: Login to ACR
+    - name: Login to ACR with the AccessKey pair
       uses: aliyun/acr-login@v1
       with:
-      access-key-id: "${{ secrets.DOCKER_USER }}"
-      access-key-secret: "${{ secrets.DOCKER_PASS }}"
+        region-id: "${{ env.REGION_ID }}"
+        access-key-id: "${{ secrets.DOCKER_USER }}"
+        access-key-secret: "${{ secrets.DOCKER_PASS }}"
+
     # 1.2 Buid and push image to ACR
     - name: Build and push image to DockerHub
       run: |
