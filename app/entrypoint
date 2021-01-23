@@ -1,18 +1,20 @@
 #!/bin/bash -e
 
-export APACHE_LOG_DIR=${APACHE_LOG_DIR:-/var/log/apache2}
-export APACHE_RUN_GROUP=${APACHE_RUN_GROUP:-www-data}
-export APACHE_RUN_USER=${APACHE_RUN_USER:-www-data}
-export APACHE_PID_FILE=${APACHE_PID_FILE:-/var/run/apache2/apache2.pid}
-export APACHE_LOCK_DIR=${APACHE_LOCK_DIR:-/var/lock/apache2}
-export APACHE_RUN_DIR=${APACHE_RUN_DIR:-/var/run/apache2}
+APP_DIR=${APP_DIR:-/app}
+GIT_HASH=${GIT_HASH-xxxxxxx}
+TAG_TIME=${TAG_TIME-194910010000}
 
 ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 
-APP_DIR=${APP_DIR:-/app}
+# Redirect apache logs to workable stdout/stderr
+ln -sf /proc/1/fd/1 /var/log/apache2/access.log
+ln -sf /proc/1/fd/2 /var/log/apache2/error.log
+
+for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
 
 for i in $(find ${APP_DIR} -type f -name '*.php'); 
     do echo "Host: $(hostname)<br/>" >> $i; 
 done
 
 exec $@
+# tail -f /dev/null

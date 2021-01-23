@@ -4,4 +4,6 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-docker-compose --project-name ${PROJECT_NAME} up
+auto/build-docker-images
+
+docker-compose --project-name ${PROJECT_NAME} up -d

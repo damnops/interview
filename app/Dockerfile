@@ -1,21 +1,23 @@
 FROM php:8.0-apache
 
-ENV APP_DIR=/app
-ARG GIT_HASH=xxxxxxx
-ARG TAG_TIME=194910010000
-
+# Setup php ext pdo_mysql
 RUN docker-php-ext-install pdo_mysql
-COPY apache/ /etc/apache2/sites-enabled/
+
+ARG GIT_HASH
+ARG TAG_TIME
+
+ENV GIT_HASH=$GIT_HASH
+ENV TAG_TIME=$TAG_TIME
+ENV APP_DIR=/app
 
 WORKDIR ${APP_DIR}
 
-COPY entrypoint .
-COPY src src
+COPY entrypoint ${APP_DIR}
+COPY src ${APP_DIR}/src
+COPY apache/ /etc/apache2/sites-enabled/
 
-VOLUME ${APP_DIR}
+# VOLUME ${APP_DIR}
 
-RUN for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
+ENTRYPOINT ["/app/entrypoint"]
 
-ENTRYPOINT /app/entrypoint
-
-CMD /usr/sbin/apache2 -DFOREGROUND
+CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]

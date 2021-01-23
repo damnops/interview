@@ -12,8 +12,9 @@ This repo is used for devops interview.
 
   ```
   ./auto/run-local-env
+  echo "127.0.0.1  devops.joi.toc-platform.com" >> /etc/hosts
   ```
-  After the initialization process is successful done, you can access your local environment via [127.0.0.1](http://127.0.0.1) in your browser.
+  After the initialization process is successful done, you can access your local environment via [devops.joi.toc-platform.com](http://devops.joi.toc-platform.com) in your browser.
 
 **Provision infrastructure**
 
