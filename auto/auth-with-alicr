@@ -3,7 +3,9 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
+REPO_PREFIX="registry.cn-hongkong.aliyuncs.com"
+
 [ -f ./config/cr-credential ] && source ./config/cr-credential
 
 display_status "Login to registry"
-docker login -u ${ALICR_USER} -p ${ALICR_PASS} registry.cn-hongkong.aliyuncs.com
+docker login -u ${ALICR_USER} -p ${ALICR_PASS} ${REPO_PREFIX}

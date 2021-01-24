@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+REPO_NAMESPACE="joidevops"
 APP_NAME="app"
 MIGRATION_NAME="migration"
 GIT_HASH=$(git rev-parse --short HEAD)
