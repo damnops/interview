@@ -13,11 +13,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # 1 Buid and push image to ACR
+    # Buid and push image to ACR
     - name: Build and push image to ACR
       run: |
         ./auto/release-docker-images-to-alicr
-      with:
+      env:
         ALICR_USER: "${{ secrets.ALICR_USER }}"
         ALICR_PASS: "${{ secrets.ALICR_PASS }}"
 
@@ -28,10 +28,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # 1 Buid and push image to Dockerhub
+    # Buid and push image to Dockerhub
     - name: Build and push image to DockerHub
       run: |
         ./auto/release-docker-images-to-dockerhub
-      with:
+      env:
         DOCKER_USER: "${{ secrets.DOCKER_USER }}"
         DOCKER_PASS: "${{ secrets.DOCKER_PASS }}"
