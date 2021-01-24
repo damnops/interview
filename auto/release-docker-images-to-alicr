@@ -8,8 +8,8 @@ REPO_PREFIX="registry.cn-beijing.aliyuncs.com/joidevops"
 # Build the image
 auto/build-docker-images
 
-# Login dockerhub
-#auto/auth-with-dockerhub
+# Login ali cr
+auto/auth-with-alicr
 
 # Release
 function push_image() {

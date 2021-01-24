@@ -6,4 +6,4 @@ source ./auto/set-env-helpers
 [ -f ./config/cr-credential ] && source ./config/cr-credential
 
 display_status "Login to registry"
-docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+docker login -u ${ALICR_USER} -p ${ALICR_PASS} registry.cn-beijing.aliyuncs.com
