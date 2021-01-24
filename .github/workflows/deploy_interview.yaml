@@ -7,7 +7,7 @@ on:
 
 jobs:
   release-docker-images-to-alicr:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
