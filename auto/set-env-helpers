@@ -7,6 +7,7 @@ GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
 PROJECT_NAME=${PROJECT_NAME:-joi}
 KUBE_CONFILE="./config/kube-config.txt"
+ALICR_PREFIX="registry.cn-hongkong.aliyuncs.com"
 
 display_status() {
   echo ">>> $1 <<<" 1>&2
