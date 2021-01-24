@@ -3,11 +3,13 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
+REPO_PREFIX="joidevops"
+
 # Build the image
 auto/build-docker-images
 
 # Login dockerhub
-#auto/auth-with-dockerhub
+auto/auth-with-dockerhub
 
 # Release
 function push_image() {

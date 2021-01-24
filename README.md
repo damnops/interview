@@ -2,8 +2,14 @@
 
 This repo is used for devops interview.
 
+## Expectation
+
+* The application couldn't restart, fix the issue.
+* There are many bad practices in this repo, try to make it better.
+
 ## Prerequisite
-* [docker](https://docs.docker.com/engine/installation/mac/#/docker-toolbox)
+
+* [docker](https://docs.docker.com/desktop/#download-and-install)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
 ## Instructions
@@ -39,11 +45,13 @@ This repo is used for devops interview.
 
 **Build and release docker images**
 
-  Update the docker registry credential in the `config/cr-credential` and run following script, it will push docker images to docker hub.
+  Github action will be triggered to build and release the images to alicr and dockerhub once code is pushed into main branch.
+
+  If you want to push images to your own docker registry, update the docker registry credential in the `config/cr-credential` and run following script, it will push docker images to docker hub.
   ```
-  ./auto/auth-with-dockerhub
+  ./auto/release-docker-images-to-dockerhub
   ```
-  Since it's very slow to pull image from docker hub with China networking, we have an ali docker registry, use `auto/auth-with-ali-cr` to auth.
+  Accordingly, use `auto/release-docker-images-to-alicr` to push image to ali cr.
 
 **Deploy application to k8s**
 
@@ -51,7 +59,7 @@ This repo is used for devops interview.
   ./auto/deploy-to-k8s
   ```
   This script will generate the k8s relevant files and deploy it. We use [kustomize](https://kustomize.io/) to manage the configs.
-  After deployment process is finished, you can access the application via [devops.joi.toc-platform.com:32100](http://devops.joi.toc-platform.com:32100/)
+  After deployment process is finished, you can access the application via [PUBLIC_IP:32100](http://PUBLIC_IP:32100/)
 
 **Destroy infrastructure**
 

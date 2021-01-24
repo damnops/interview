@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-cd $(dirname $0)/..
-source ./auto/set-env-helpers
-
-source ./config/cr-credential
-
-display_status "Login to registry"
-docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} registry.cn-beijing.aliyuncs.com
