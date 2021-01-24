@@ -3,9 +3,14 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-kustomize edit set image joidevops/app:${GIT_HASH} joidevops/migration:${GIT_HASH}
+kustomize edit set image showerlee/app:${GIT_HASH} showerlee/migration:${GIT_HASH}
 kustomize build . -o kustomize-output.yaml
 
 kubectl apply -f k8s/kustomize-output.yaml
+
+# This patch will benefit the uncommitted code change such as Dockerfile, runtime script, etc to remote k8s,
+# since GIT_HASH doesn't change so the pod would not have rollingupdate
+# Sometimes it is useful for local kubectl apply to remote cluster rather than triggering pipeline.
+kubectl patch deployment devops-joi -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
 
 kubectl rollout status -w deployment/devops-joi

@@ -3,7 +3,7 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-REPO_PREFIX="registry.cn-beijing.aliyuncs.com/joidevops"
+REPO_PREFIX="registry.cn-beijing.aliyuncs.com/showerlee"
 
 # Build the image
 auto/build-docker-images

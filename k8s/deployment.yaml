@@ -11,9 +11,6 @@ spec:
     matchLabels:
       app: devops-joi
   strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
     type: RollingUpdate
   template:
     metadata:
@@ -23,7 +20,7 @@ spec:
       restartPolicy: Always
       initContainers:
       - name: devops-joi-migration
-        image: 'joidevops/migration'
+        image: 'showerlee/migration'
         imagePullPolicy: Always
         env:
           - name: DB_HOST
@@ -48,7 +45,7 @@ spec:
                 name: db-info
       containers:
       - name: devops-joi-app
-        image: 'joidevops/app'
+        image: 'showerlee/app'
         imagePullPolicy: Always
         ports:
           - containerPort: 80
@@ -74,6 +71,36 @@ spec:
               secretKeyRef:
                 key: DB_PASSWORD
                 name: db-info
+          - name: APACHE_LOG_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_LOG_DIR
+          - name: APACHE_RUN_GROUP
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_RUN_GROUP
+          - name: APACHE_RUN_USER
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_RUN_USER
+          - name: APACHE_PID_FILE
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_PID_FILE
+          - name: APACHE_LOCK_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_LOCK_DIR
+          - name: APACHE_RUN_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: apache-info
+                key: APACHE_RUN_DIR
         livenessProbe:
           httpGet:
             path: /diagnostic/liveness
