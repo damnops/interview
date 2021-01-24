@@ -3,8 +3,6 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-REPO_PREFIX="joidevops"
-
 # Build the image
 auto/build-docker-images
 
@@ -14,11 +12,11 @@ auto/auth-with-dockerhub
 # Release
 function push_image() {
   display_status "Release to registry"
-  docker tag ${PROJECT_NAME}_${1} ${REPO_PREFIX}/${1}
-  docker tag ${PROJECT_NAME}_${1} ${REPO_PREFIX}/${1}:${GIT_HASH}
-  docker push ${REPO_PREFIX}/${1}
-  docker push ${REPO_PREFIX}/${1}:${GIT_HASH}
-  display_status "Pushed docker image ${REPO_PREFIX}/${1} with tags ${GIT_HASH}, latest"
+  docker tag ${PROJECT_NAME}_${1} ${REPO_NAMESPACE}/${1}
+  docker tag ${PROJECT_NAME}_${1} ${REPO_NAMESPACE}/${1}:${GIT_HASH}
+  docker push ${REPO_NAMESPACE}/${1}
+  docker push ${REPO_NAMESPACE}/${1}:${GIT_HASH}
+  display_status "Pushed docker image ${REPO_NAMESPACE}/${1} with tags ${GIT_HASH}, latest"
 }
 
 push_image ${APP_NAME}
