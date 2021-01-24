@@ -4,8 +4,9 @@ resources:
 - deployment.yaml
 - service.yaml
 - secret.yaml
+- configmap.yaml
 images:
-- name: joidevops/app
-  newTag: 44e9004
-- name: joidevops/migration
-  newTag: 44e9004
+- name: showerlee/app
+  newTag: f70daed
+- name: showerlee/migration
+  newTag: f70daed

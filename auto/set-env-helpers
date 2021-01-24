@@ -2,7 +2,7 @@
 
 APP_NAME="app"
 MIGRATION_NAME="migration"
-REPO_PREFIX="joidevops"
+REPO_PREFIX="showerlee"
 GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
 PROJECT_NAME=${PROJECT_NAME:-joi}
@@ -19,13 +19,13 @@ function terraform() {
   hashicorp/terraform $@
 }
 
-function kubectl() {
-  docker run --rm \
-  -v ${PWD}/${KUBE_CONFILE}:/.kube/config \
-  -v ${PWD}:/working \
-  -w /working \
-  bitnami/kubectl $@
-}
+# function kubectl() {
+#   docker run --rm \
+#   -v ${PWD}/${KUBE_CONFILE}:/.kube/config \
+#   -v ${PWD}:/working \
+#   -w /working \
+#   bitnami/kubectl $@
+# }
 
 function kustomize() {
   docker run --rm \
