@@ -24,3 +24,4 @@ function push_image() {
 push_image ${APP_NAME}
 push_image ${MIGRATION_NAME}
 
+docker logout
