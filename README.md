@@ -6,6 +6,7 @@ This repo is used for devops interview.
 
 * The application couldn't start, fix the issue.
 * There are many bad practices in this repo, try to make it better.
+* Any further improvement in this repo, like infra, HA, etc.
 
 ## Prerequisite
 
@@ -26,14 +27,14 @@ This repo is used for devops interview.
   ```
   ./auto/provison-infra-via-terraform {CLOUD_PROVIDER}
   ```
-  Use this script to provision infrastructure on the according cloud, create a provider dir and terraform configs in it, terraform will provision it. 
+  Use this script to provision infrastructure on the according cloud, create a provider dir and terraform configs in `terraform` dir, terraform will provision it. 
   You can also use the extended script like 
   ```
   ./auto/provison-infra-on-alicloud
   ```
   to provision on the specific cloud.
 
-  Remember to put your access id & secret key pair in `credentials.auto.tfvars` file, this filename is added in the .gitignore, or else it might be uploaded to remote repo.
+  Put your access id & secret key pair in `credentials.auto.tfvars` file, this filename is added in the .gitignore, or else it might be uploaded to remote repo.
 
 ### Setup kubectl config for aws k8s
 
