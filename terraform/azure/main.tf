@@ -100,7 +100,7 @@ resource "azurerm_linux_virtual_machine" "this" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = file("${path.module}/id_rsa_azure.pub")
+    public_key = file("${path.module}/tmp/id_rsa_azure.pub")
   }
 
   os_disk {
@@ -125,7 +125,7 @@ resource "azurerm_linux_virtual_machine" "this" {
       user        = "azureuser"
       host        = self.public_ip_address
       timeout     = "10m"
-      private_key = file("${path.module}/id_rsa_azure")
+      private_key = file("${path.module}/tmp/id_rsa_azure")
     }
     inline = [
       "sudo time cloud-init status -w -l",
@@ -136,7 +136,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   }
 
   provisioner "local-exec" {
-    command    = "scp -i ${path.module}/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@${self.public_ip_address}:/tmp/admin.kubeconfig ./kubeconfig"
+    command    = "scp -i ${path.module}/tmp/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@${self.public_ip_address}:/tmp/admin.kubeconfig ./tmp/kubeconfig.txt"
     on_failure = continue
   }
 }

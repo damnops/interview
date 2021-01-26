@@ -3,4 +3,11 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-auto/destroy-infra-via-terraform alicloud
+WORK_DIR = './terraform/azure'
+
+echo ARM_CLIENT_ID="${ARM_CLIENT_ID:?ARM_CLIENT_ID must be set}" > ${WORK_DIR}/tmp/.env
+echo ARM_CLIENT_SECRET="${ARM_CLIENT_SECRET:?ARM_CLIENT_SECRET must be set}" >> ${WORK_DIR}/tmp/.env
+echo ARM_SUBSCRIPTION_ID="${ARM_SUBSCRIPTION_ID:?ARM_SUBSCRIPTION_ID must be set}" >> ${WORK_DIR}/tmp/.env
+echo ARM_TENANT_ID="${ARM_TENANT_ID:?ARM_TENANT_ID must be set}" >> ${WORK_DIR}/tmp/.env
+
+auto/destroy-infra-via-terraform azure
