@@ -18,7 +18,7 @@ This repo is used for devops interview.
 ### Init your new local environment
 
   ```
-  ./auto/run-local-env
+  ./auto/start-local-env
   ```
   After the initialization process is successful done, you can access your local environment via [127.0.0.1](http://127.0.0.1) in your browser.
 
@@ -79,3 +79,9 @@ This repo is used for devops interview.
   ./auto/destroy-infra-via-terraform {CLOUD_PROVIDER}
   ```
   Destroy the infrastructure which created by the provision scripts, you can also use the extended script.
+
+### Stop and clean local environment
+
+  ```
+  ./auto/stop-local-env
+  ```

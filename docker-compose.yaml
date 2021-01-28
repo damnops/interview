@@ -13,8 +13,6 @@ services:
     depends_on:
       - db
       - migration
-    networks:
-      - backend
 
   migration:
     build:
