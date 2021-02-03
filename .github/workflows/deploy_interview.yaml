@@ -13,7 +13,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Buid and push image to ACR
+    # 1.1 Login to ACR
+    - name: Login to ACR with the AccessKey pair
+      env:
+        ALICR_USER: "${{ secrets.ALICR_USER }}"
+        ALICR_PASS: "${{ secrets.ALICR_PASS }}"
+        ALICR_PREFIX: "${{ secrets.ALICR_PREFIX }}"
+      run: |
+        ./auto/auth-with-ali-cr
+
+    # 1.2 Buid and push image to ACR
     - name: Build and push image to ACR
       run: |
         ./auto/release-docker-images-to-alicr
@@ -28,7 +37,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Buid and push image to Dockerhub
+    # 2.1 Login to Dockerhub
+    - name: Login to DockerHub
+      env:
+        DOCKER_USER: "${{ secrets.DOCKER_USER }}"
+        DOCKER_PASS: "${{ secrets.DOCKER_PASS }}"
+      run: |
+        ./auto/auth-with-ali-cr
+
+    # 2.2 Buid and push image to Dockerhub
     - name: Build and push image to DockerHub
       run: |
         ./auto/release-docker-images-to-dockerhub
