@@ -20,7 +20,7 @@ jobs:
         ALICR_PASS: "${{ secrets.ALICR_PASS }}"
         ALICR_PREFIX: "${{ secrets.ALICR_PREFIX }}"
       run: |
-        ./auto/auth-with-ali-cr
+        ./auto/auth-with-alicr
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to ACR
