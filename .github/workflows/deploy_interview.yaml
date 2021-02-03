@@ -43,7 +43,7 @@ jobs:
         DOCKER_USER: "${{ secrets.DOCKER_USER }}"
         DOCKER_PASS: "${{ secrets.DOCKER_PASS }}"
       run: |
-        ./auto/auth-with-ali-cr
+        ./auto/auth-with-dockerhub
 
     # 2.2 Buid and push image to Dockerhub
     - name: Build and push image to DockerHub
