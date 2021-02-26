@@ -3,4 +3,4 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-auto/destroy-infra-via-terraform azure
+auto/destroy-infra-via-terraform aws
