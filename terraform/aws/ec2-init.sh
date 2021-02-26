@@ -36,5 +36,13 @@ echo "[kubernetes:children]" >> inventory/hosts
 echo "master" >> inventory/hosts
 echo "worker" >> inventory/hosts
 
+
+# setup kubelet config
+cat > /var/lib/kubelet/config.yaml <<EOF
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd
+EOF
+
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
 popd
