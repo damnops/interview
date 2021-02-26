@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket         = "minikube-toc"
-    key            = "terraform.tfstate"
+    bucket         = "minikube-terraform-toc"
+    key            = "zhenyu.li/terraform.tfstate"
     region         = "ap-southeast-1"
     encrypt        = true
   }

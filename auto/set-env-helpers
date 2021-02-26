@@ -15,12 +15,12 @@ display_status() {
 
 function terraform() {
 
-  [[ ! -f ./tmp/env ]] && echo > ./tmp/.env
+  [[ ! -f ./tmp/env ]] && echo > ./tmp/env
 
   docker run --rm \
   -v ${PWD}:/working \
   -w /working \
-  --env-file ./tmp/.env \
+  --env-file ./tmp/env \
   hashicorp/terraform $@
 }
 

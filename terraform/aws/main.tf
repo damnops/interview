@@ -32,7 +32,7 @@ module "ec2-sg" {
     from_port   = 22,
     to_port     = 22,
     protocol    = "tcp",
-    cidr_blocks = join(",", local.tw_ip, local.your_ip)
+    cidr_blocks = "0.0.0.0/0"
   },
   {
     description = "allow ssh in",
