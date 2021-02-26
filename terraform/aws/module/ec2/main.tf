@@ -92,5 +92,26 @@ resource "aws_instance" "this" {
   credit_specification {
     cpu_credits = local.is_t_instance_type ? var.cpu_credits : null
   }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      host        =  self.public_ip
+      timeout     = "15m"
+      private_key = file("${path.module}/../../tmp/id_rsa")
+    }
+    inline = [
+      "sudo time cloud-init status -w -l",
+      "sudo cp /etc/kubernetes/admin.kubeconfig /tmp/admin.kubeconfig",
+      "sudo sed -i \"s/${self.private_ip}/${self.public_ip}/g\" /tmp/admin.kubeconfig",
+      "sudo chmod 777 /tmp/admin.kubeconfig"
+    ]
+  }
+
+  provisioner "local-exec" {
+    command    = "scp -i ${path.module}/../../tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kubeconfig.txt"
+    on_failure = continue
+  }
 }
 

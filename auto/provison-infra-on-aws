@@ -3,4 +3,4 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-auto/provison-infra-via-terraform alicloud
+auto/provison-infra-via-terraform aws

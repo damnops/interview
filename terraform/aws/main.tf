@@ -1,15 +1,15 @@
 locals {
   tags = {
-    project = "minikube"
+    project = "kube"
   }
   tw_ip = "202.66.38.130/32"
 }
 
 
 module "vpc" {
-  source = "module/vpc"
+  source = "./module/vpc"
 
-  name                 = "minikube-vpc"
+  name                 = "kube-vpc"
   cidr                 = "10.195.144.0/25"
   public_subnet_cidr   = ["10.195.144.0/27", "10.195.144.32/27"]
   private_subnet_cidr  = ["10.195.144.64/27", "10.195.144.96/27"]
@@ -21,9 +21,9 @@ module "vpc" {
 
 
 module "ec2-sg" {
-  source = "module/security-group"
+  source = "./module/security-group"
 
-  name   = "minikube-ec2-sg"
+  name   = "kube-ec2-sg"
   vpc_id = module.vpc.vpc_id
 
   ingress_with_cidr_blocks = [{
@@ -32,7 +32,15 @@ module "ec2-sg" {
     to_port     = 22,
     protocol    = "tcp",
     cidr_blocks = local.tw_ip
-  }]
+  },
+  {
+    description = "allow ssh in",
+    from_port   = 6443,
+    to_port     = 6443,
+    protocol    = "tcp",
+    cidr_blocks = "0.0.0.0/0"
+  }
+  ]
 
   egress_with_cidr_blocks = [{
     from_port   = 0,
@@ -45,7 +53,7 @@ module "ec2-sg" {
 }
 
 module "ec2-user-role" {
-  source = "module/iam-role-policy"
+  source = "./module/iam-role-policy"
 
   role_name   = "ec2-user-role"
   policy_name = "ec2-user-policy"
@@ -64,28 +72,27 @@ module "ec2-user-role" {
   tags = local.tags
 }
 
-module "ec2-key"{
-  source = "module/key-pair"
-
-  key_pair_names = ["minikube-ec2-key"]
+resource "aws_key_pair" "this" {
+  key_name   = "kube-ec2-key"
+  public_key = file("${path.module}/tmp/id_rsa.pub")
 }
 
 module "kube-ec2" {
-  source = "module/ec2"
+  source = "./module/ec2"
 
-  name                        = "minikube-ec2"
+  name                        = "kube-ec2"
   subnet_ids                  = module.vpc.public_subnets
   vpc_security_group_ids      = module.ec2-sg.security_group_id
   associate_public_ip_address = true
-  user_data                   = file("./ec2-init.sh")
-  ami_id                      = "ami-00b8d9cb8a7161e41"
+  user_data                   = file("${path.module}/ec2-init.sh")
+  ami_id                      = "ami-0906d93ef47e8c107"
   instance_type               = "t2.medium"
-  key_name                    = module.ec2-key.key_name[0]
+  key_name                    = aws_key_pair.this.key_name
 
   root_block_device = [
     {
       volume_type = "gp2"
-      volume_size = 50
+      volume_size = 120
       encrypted   = false
     }
   ]
