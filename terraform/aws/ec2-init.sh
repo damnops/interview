@@ -12,8 +12,6 @@ chmod +x /usr/bin/yq
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
-source ~/.bashrc
 pip3 install --upgrade pip
 pip3 install ansible==2.10.4
 
@@ -24,7 +22,7 @@ PUBLIC_IP=$(curl -s www.pubyun.com/dyndns/getip)
 PRIVATE_IP=$(hostname -i)
 
 yq eval --inplace "(.kubernetes.ssl.extension.[0]) = \"$PUBLIC_IP\"" group_vars/all.yml
-yq eval --inplace '(.ansible_python_interpreter) = "/usr/bin/python2"' group_vars/all.yml
+yq eval --inplace '(.ansible_python_interpreter) = "/usr/bin/python3"' group_vars/all.yml
 yq eval --inplace '(.kubernetes.kubelet.pod_infra_container_image) = "k8s.gcr.io/pause:3.2"' group_vars/all.yml
 yq eval --inplace '(.kubernetes.settings.master_run_pod) = "true"' group_vars/all.yml
 
@@ -35,14 +33,6 @@ echo "[worker]" >> inventory/hosts
 echo "[kubernetes:children]" >> inventory/hosts
 echo "master" >> inventory/hosts
 echo "worker" >> inventory/hosts
-
-
-# setup kubelet config
-cat > /var/lib/kubelet/config.yaml <<EOF
-apiVersion: kubelet.config.k8s.io/v1beta1
-kind: KubeletConfiguration
-cgroupDriver: systemd
-EOF
 
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
 popd
