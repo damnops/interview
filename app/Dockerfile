@@ -12,7 +12,7 @@ WORKDIR ${APP_DIR}
 COPY entrypoint .
 COPY src src
 
-VOLUME ${APP_DIR}
+# VOLUME ${APP_DIR}
 
 RUN for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
 
