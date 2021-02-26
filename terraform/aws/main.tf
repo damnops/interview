@@ -85,7 +85,7 @@ module "kube-ec2" {
   vpc_security_group_ids      = module.ec2-sg.security_group_id
   associate_public_ip_address = true
   user_data                   = file("${path.module}/ec2-init.sh")
-  ami_id                      = "ami-0906d93ef47e8c107"
+  ami_id                      = "ami-028a5cff2f5a0f6c3"
   instance_type               = "t2.medium"
   key_name                    = aws_key_pair.this.key_name
 
