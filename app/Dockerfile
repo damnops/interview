@@ -17,6 +17,6 @@ COPY src src
 
 RUN for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
 
-ENTRYPOINT /app/entrypoint
+ENTRYPOINT ["/app/entrypoint"]
 
-CMD /usr/sbin/apache2 -DFOREGROUND
+CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
