@@ -1,10 +1,11 @@
 FROM php:8.0-apache
 
+RUN docker-php-ext-install pdo_mysql
+
 ENV APP_DIR=/app
 ARG GIT_HASH=xxxxxxx
 ARG TAG_TIME=194910010000
 
-RUN docker-php-ext-install pdo_mysql
 COPY apache/ /etc/apache2/sites-enabled/
 
 WORKDIR ${APP_DIR}
