@@ -79,12 +79,18 @@ spec:
             path: /diagnostic/liveness
             port: 80
             scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: devops.joi.toc-platform.com
         readinessProbe:
           failureThreshold: 3
           httpGet:
             path: /diagnostic/readiness
             port: 80
             scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: devops.joi.toc-platform.com
 ---
 apiVersion: apps/v1
 kind: Deployment
