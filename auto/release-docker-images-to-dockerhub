@@ -7,7 +7,7 @@ source ./auto/set-env-helpers
 auto/build-docker-images
 
 # Login dockerhub
-auto/auth-with-dockerhub
+# auto/auth-with-dockerhub
 
 # Release
 function push_image() {

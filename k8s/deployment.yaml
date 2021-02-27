@@ -23,7 +23,7 @@ spec:
       restartPolicy: Always
       initContainers:
       - name: devops-joi-migration
-        image: 'joidevops/migration'
+        image: 'showerlee/migration'
         imagePullPolicy: Always
         env:
           - name: DB_HOST
@@ -48,7 +48,7 @@ spec:
                 name: db-info
       containers:
       - name: devops-joi-app
-        image: 'joidevops/app'
+        image: 'showerlee/app'
         imagePullPolicy: Always
         ports:
           - containerPort: 80

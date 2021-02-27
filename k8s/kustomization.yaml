@@ -5,7 +5,7 @@ resources:
 - service.yaml
 - secret.yaml
 images:
-- name: joidevops/app
+- name: showerlee/app
   newTag: 44e9004
-- name: joidevops/migration
+- name: showerlee/migration
   newTag: 44e9004
