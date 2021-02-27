@@ -35,9 +35,16 @@ module "ec2-sg" {
     cidr_blocks = "0.0.0.0/0"
   },
   {
-    description = "allow ssh in",
+    description = "allow kube api in",
     from_port   = 6443,
     to_port     = 6443,
+    protocol    = "tcp",
+    cidr_blocks = "0.0.0.0/0"
+  },
+  {
+    description = "allow app in",
+    from_port   = 32100,
+    to_port     = 32100,
     protocol    = "tcp",
     cidr_blocks = "0.0.0.0/0"
   }
