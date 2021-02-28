@@ -42,9 +42,16 @@ module "ec2-sg" {
     cidr_blocks = "0.0.0.0/0"
   },
   {
-    description = "allow app in",
+    description = "allow nodeport in",
     from_port   = 32100,
     to_port     = 32100,
+    protocol    = "tcp",
+    cidr_blocks = "0.0.0.0/0"
+  },
+  {
+    description = "allow ingress in",
+    from_port   = 30080,
+    to_port     = 30080,
     protocol    = "tcp",
     cidr_blocks = "0.0.0.0/0"
   }

@@ -4,8 +4,9 @@ resources:
 - deployment.yaml
 - service.yaml
 - secret.yaml
+- ingress.yaml
 images:
 - name: showerlee/app
-  newTag: 44e9004
+  newTag: 13c366f
 - name: showerlee/migration
-  newTag: 44e9004
+  newTag: 13c366f

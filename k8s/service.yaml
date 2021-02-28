@@ -3,13 +3,12 @@ kind: Service
 metadata:
   name: devops-joi
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: devops-joi
   ports:
-    - protocol: TCP
+    - name: http
       port: 80
-      nodePort: 32100
 ---
 apiVersion: v1
 kind: Service

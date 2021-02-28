@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: devops-joi
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: devops.joi.toc-platform.com
+    http:
+      paths:
+      - path: /
+        backend:
+          # need match backend service name
+          serviceName: devops-joi
+          servicePort: 80
