@@ -2,7 +2,7 @@
 
 ```
 # before create
-IP is only allowd from tw, you can add your IP at tfvars
+The defualt IP range is only allowd from tw, you can change your IP at tfvars
 
 # create vm
 terraform init
