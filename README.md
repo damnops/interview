@@ -34,15 +34,11 @@ This repo is used for devops interview.
   ```
   to provision on the specific cloud.
 
-  Put your access id & secret key pair in `credentials.auto.tfvars` file, this filename is added in the .gitignore, or else it might be uploaded to remote repo.
+  Make sure you set the proper credential for terraform to work, check the code for each one.
 
-### Setup kubectl config for aws k8s
+### Setup kubectl config for k8s
 
-  After the provision infrastructure step is done, we should have a workable k8s cluster. Aliyun provision step will copy the kubectl config to local, but for AWS, we need to run the following script to download the kube config file.
-  ```
-  ./auto/setup-kube-config-for-aws
-  ```
-  The config file will be set as `config/kube-config.txt`, if there are something wrong with k8s cluster control via kubectl, check this file.
+  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to local `./tmp/kube-config.txt`, if there are something wrong with k8s cluster control via kubectl, check this file.
 
 ### Build and release docker images
 
@@ -59,7 +55,7 @@ This repo is used for devops interview.
   Migration: registry.cn-hongkong.aliyuncs.com/joidevops/migratino:{TAG}
   ```
   
-  If you want to push images to your own docker registry, update the docker registry credential in the `config/cr-credential` and run following script, it will push docker images to docker hub.
+  If you want to push images to your own docker registry, update the docker registry credential in the `config/cr-credential` and set the right repo path for each image, then run the following script, it will push docker images to your docker hub.
   ```
   ./auto/release-docker-images-to-dockerhub
   ```

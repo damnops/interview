@@ -89,7 +89,7 @@ resource "alicloud_instance" "instance" {
     ]
   }
   provisioner "local-exec" {
-    command = "scp -i ./tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kube-config.txt"
+    command = "scp -i ./tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kubeconfig.txt"
   }
 }
 
