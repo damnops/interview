@@ -3,7 +3,6 @@ locals {
     project = "kube"
   }
   tw_ip = "202.66.38.130/32"
-  your_ip = ""
 }
 
 
@@ -32,7 +31,7 @@ module "ec2-sg" {
     from_port   = 22,
     to_port     = 22,
     protocol    = "tcp",
-    cidr_blocks = join(",", local.tw_ip, local.your_ip)
+    cidr_blocks = join(",", local.tw_ip, var.customize_ip)
   },
   {
     description = "allow ssh in",

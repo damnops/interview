@@ -2,8 +2,7 @@
 
 ```
 # before create
-change backend.tf s3 bucket
-Ip is only allowd from tw, you can add your ip at main locals
+IP is only allowd from tw, you can add your IP at tfvars
 
 # create vm
 terraform init
