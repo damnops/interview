@@ -6,7 +6,7 @@ MIGRATION_NAME="migration"
 GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
 PROJECT_NAME=${PROJECT_NAME:-joi}
-KUBE_CONFILE="./tmp/kubeconfig.txt"
+KUBE_CONFILE="./config/kube-config.txt"
 ALICR_PREFIX="registry.cn-hongkong.aliyuncs.com"
 
 display_status() {
@@ -20,6 +20,10 @@ function terraform() {
   docker run --rm \
   -v ${PWD}:/working \
   -w /working \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
+  -e AWS_DEFAULT_REGION \
   --env-file ./tmp/.env \
   hashicorp/terraform $@
 }

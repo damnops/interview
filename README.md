@@ -2,6 +2,8 @@
 
 This repo is used for devops interview.
 
+**Please DO NOT push code into main branch directly!**
+
 ## Expectation
 
 * The application couldn't start, fix the issue.
@@ -38,11 +40,18 @@ This repo is used for devops interview.
 
 ### Setup kubectl config for k8s
 
-  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to local `./tmp/kube-config.txt`, if there are something wrong with k8s cluster control via kubectl, check this file.
+  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to `./tmp/kube-config.txt` in local terraform dir.
+
+  Use the following command to copy the config file as `config/kube-config.txt` to make kubectl in scripts work.
+  ```
+  auto/get-kubeconfig-from-terraform {CLOUD_PROVIDER}
+  ```
+
+  Check the above files if there are something wrong.
 
 ### Build and release docker images
 
-  Github action will be triggered to build and release the images to alicr and dockerhub once code is pushed into main branch. Please use following URLs to access the images.
+  Github action will be triggered to build and release the images to alicr and dockerhub once code is pushed into main branch and any branch start with `joi-`. Please use following URLs to access the images.
 
   **Dockerhub**
   ```

@@ -136,7 +136,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   }
 
   provisioner "local-exec" {
-    command    = "scp -i ${path.module}/tmp/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@${self.public_ip_address}:/tmp/admin.kubeconfig ./tmp/kubeconfig.txt"
+    command    = "scp -i ${path.module}/tmp/id_rsa_azure -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@${self.public_ip_address}:/tmp/admin.kubeconfig ./tmp/kube-config.txt"
     on_failure = continue
   }
 }

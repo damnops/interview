@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - main
+    - joi-**
 
 jobs:
   release-docker-images-to-alicr:

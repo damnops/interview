@@ -110,7 +110,7 @@ resource "aws_instance" "this" {
   }
 
   provisioner "local-exec" {
-    command    = "scp -i ${path.module}/../../tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kubeconfig.txt"
+    command    = "scp -i ${path.module}/../../tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${self.public_ip}:/tmp/admin.kubeconfig ./tmp/kube-config.txt"
     on_failure = continue
   }
 }
