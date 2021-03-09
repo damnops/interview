@@ -3,9 +3,9 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-kustomize edit set image joidevops/app:${GIT_HASH} joidevops/migration:${GIT_HASH}
+kustomize edit set image registry.ap-southeast-1.aliyuncs.com/bthlt/app:${GIT_HASH} registry.ap-southeast-1.aliyuncs.com/bthlt/migration:${GIT_HASH}
 kustomize build . -o kustomize-output.yaml
 
-kubectl apply -f k8s/kustomize-output.yaml
+kubectl --kubeconfig terraform/aws/tmp/kubeconfig.txt  apply -f k8s/kustomize-output.yaml
 
-kubectl rollout status -w deployment/devops-joi
+kubectl --kubeconfig terraform/aws/tmp/kubeconfig.txt  rollout status -w deployment/devops-joi

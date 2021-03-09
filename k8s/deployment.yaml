@@ -21,9 +21,11 @@ spec:
         app: devops-joi
     spec:
       restartPolicy: Always
+      imagePullSecrets:
+        - name: aliyunregistry-ap-southeast-1
       initContainers:
       - name: devops-joi-migration
-        image: 'joidevops/migration'
+        image: 'registry.ap-southeast-1.aliyuncs.com/bthlt/migration'
         imagePullPolicy: Always
         env:
           - name: DB_HOST
@@ -48,7 +50,7 @@ spec:
                 name: db-info
       containers:
       - name: devops-joi-app
-        image: 'joidevops/app'
+        image: 'registry.ap-southeast-1.aliyuncs.com/bthlt/app'
         imagePullPolicy: Always
         ports:
           - containerPort: 80
@@ -75,12 +77,13 @@ spec:
                 key: DB_PASSWORD
                 name: db-info
         livenessProbe:
+          failureThreshold: 300
           httpGet:
             path: /diagnostic/liveness
             port: 80
             scheme: HTTP
         readinessProbe:
-          failureThreshold: 3
+          failureThreshold: 300
           httpGet:
             path: /diagnostic/readiness
             port: 80

@@ -1,0 +1,191 @@
+{
+  "version": 4,
+  "terraform_version": "0.14.7",
+  "serial": 66,
+  "lineage": "b8796423-5f4c-6874-c258-4a0ddd02d48d",
+  "outputs": {},
+  "resources": [
+    {
+      "module": "module.ec2-sg",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:494526681395:security-group/sg-0cd736b46424f6779",
+            "description": "Security Group managed by Terraform",
+            "egress": [],
+            "id": "sg-0cd736b46424f6779",
+            "ingress": [],
+            "name": "kube-ec2-sg",
+            "name_prefix": "",
+            "owner_id": "494526681395",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Name": "kube-ec2-sg",
+              "Owner": "zi.wang",
+              "project": "kube"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0eb9854c45c39a6f6"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.ec2-sg",
+      "mode": "managed",
+      "type": "aws_security_group_rule",
+      "name": "egress_with_cidr_blocks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 2,
+          "attributes": {
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "description": "Egress Rule",
+            "from_port": 0,
+            "id": "sgrule-828072523",
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": [],
+            "protocol": "-1",
+            "security_group_id": "sg-0cd736b46424f6779",
+            "self": false,
+            "source_security_group_id": null,
+            "to_port": 0,
+            "type": "egress"
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    },
+    {
+      "module": "module.ec2-sg",
+      "mode": "managed",
+      "type": "aws_security_group_rule",
+      "name": "ingress_with_cidr_blocks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 2,
+          "attributes": {
+            "cidr_blocks": [
+              "113.200.150.121/32"
+            ],
+            "description": "allow ssh in",
+            "from_port": 22,
+            "id": "sgrule-554081896",
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": [],
+            "protocol": "tcp",
+            "security_group_id": "sg-0cd736b46424f6779",
+            "self": false,
+            "source_security_group_id": null,
+            "to_port": 22,
+            "type": "ingress"
+          },
+          "sensitive_attributes": []
+        },
+        {
+          "index_key": 1,
+          "schema_version": 2,
+          "attributes": {
+            "cidr_blocks": [
+              "0.0.0.0/0"
+            ],
+            "description": "allow ssh in",
+            "from_port": 6443,
+            "id": "sgrule-1477777549",
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": [],
+            "protocol": "tcp",
+            "security_group_id": "sg-0cd736b46424f6779",
+            "self": false,
+            "source_security_group_id": null,
+            "to_port": 6443,
+            "type": "ingress"
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:494526681395:internet-gateway/igw-0bd0e2fb3ae1cef4f",
+            "id": "igw-0bd0e2fb3ae1cef4f",
+            "owner_id": "494526681395",
+            "tags": {
+              "Name": "internet-gateway-0",
+              "Owner": "zi.wang",
+              "project": "kube"
+            },
+            "vpc_id": "vpc-0eb9854c45c39a6f6"
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:494526681395:vpc/vpc-0eb9854c45c39a6f6",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.195.144.0/25",
+            "default_network_acl_id": "acl-039a40eff85801554",
+            "default_route_table_id": "rtb-000e6407394a678d3",
+            "default_security_group_id": "sg-0dd0558fcb074ce95",
+            "dhcp_options_id": "dopt-6c6b8309",
+            "enable_classiclink": false,
+            "enable_classiclink_dns_support": false,
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "id": "vpc-0eb9854c45c39a6f6",
+            "instance_tenancy": "default",
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "main_route_table_id": "rtb-000e6407394a678d3",
+            "owner_id": "494526681395",
+            "tags": {
+              "Name": "kube-vpc",
+              "Owner": "zi.wang",
+              "project": "kube"
+            }
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    }
+  ]
+}
+

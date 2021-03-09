@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
-REPO_NAMESPACE="joidevops"
+REPO_NAMESPACE="bthlt"
 APP_NAME="app"
 MIGRATION_NAME="migration"
 GIT_HASH=$(git rev-parse --short HEAD)
 TAG_TIME=$(date +'%Y%m%d%H%M')
 PROJECT_NAME=${PROJECT_NAME:-joi}
 KUBE_CONFILE="./tmp/kubeconfig.txt"
-ALICR_PREFIX="registry.cn-hongkong.aliyuncs.com"
+ALICR_PREFIX="registry.ap-southeast-1.aliyuncs.com"
 
 display_status() {
   echo ">>> $1 <<<" 1>&2
@@ -15,12 +15,12 @@ display_status() {
 
 function terraform() {
 
-  [[ ! -f ./tmp/env ]] && echo > ./tmp/.env
+  [[ ! -f ./terraform/aws/tmp/.env ]] && echo > ./terraform/aws/tmp/.env
 
   docker run --rm \
   -v ${PWD}:/working \
   -w /working \
-  --env-file ./tmp/.env \
+  --env-file ./terraform/aws/tmp/.env \
   hashicorp/terraform $@
 }
 

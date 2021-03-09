@@ -1,6 +1,7 @@
 locals {
   tags = {
     project = "kube"
+    Owner = "zi.wang"
   }
 }
 

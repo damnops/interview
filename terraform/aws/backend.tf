@@ -5,6 +5,12 @@ terraform {
       version = "~> 3.0"
     }
   }
+  backend "s3" {
+    bucket  = "minikube-terraform-toc"
+    key     = "zi.wang/terraform.tfstate"
+    region         = "ap-southeast-1"
+    encrypt = true
+  }
 }
 
 provider "aws" {

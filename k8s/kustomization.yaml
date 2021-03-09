@@ -9,3 +9,11 @@ images:
   newTag: 44e9004
 - name: joidevops/migration
   newTag: 44e9004
+- name: registry.ap-southeast-1.aliyuncs.com/bthlt/app
+  newTag: 4b59680
+- name: registry.ap-southeast-1.aliyuncs.com/bthlt/migration
+  newTag: 4b59680
+- name: registry.cn-hangzhou.aliyuncs.com/bthlt/app
+  newTag: 4b59680
+- name: registry.cn-hangzhou.aliyuncs.com/bthlt/migration
+  newTag: 4b59680
