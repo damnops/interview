@@ -1,0 +1,6 @@
+
+
+                "MYSQL_DATABASE=devops",
+                "MYSQL_USER=iamnoone",
+                "MYSQL_PASSWORD=HearMeRoar!",
+                "DB_HOST=devops-joi-db",

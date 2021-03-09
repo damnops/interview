@@ -2,7 +2,11 @@ FROM mysql:8
 
 WORKDIR /app
 
-COPY . .
+# COPY . .
+VOLUME "/app"
 
-ENTRYPOINT ["/app/entrypoint"]
-CMD ["/app/run"]
+
+#ENTRYPOINT [ "/app/entrypoint" , "/app/run" ]
+
+CMD [ "/app/entrypoint" , "/app/run" ]
+#CMD ["/app/run"]

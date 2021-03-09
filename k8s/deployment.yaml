@@ -1,11 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: devops-joi
   name: devops-joi
+  namespace: devops
 spec:
-  progressDeadlineSeconds: 60
   replicas: 1
   selector:
     matchLabels:
@@ -23,8 +21,9 @@ spec:
       restartPolicy: Always
       initContainers:
       - name: devops-joi-migration
-        image: 'joidevops/migration'
-        imagePullPolicy: Always
+        image: 'joidevops/migration:latest'
+        command: [ '/app/entrypoint' ]
+        args: [ '/app/run' ]
         env:
           - name: DB_HOST
             valueFrom:
@@ -46,13 +45,26 @@ spec:
               secretKeyRef:
                 key: DB_PASSWORD
                 name: db-info
+        volumeMounts:
+          - mountPath: /app
+            name: migration-volume
       containers:
       - name: devops-joi-app
-        image: 'joidevops/app'
+        image: 'joidevops/app:latest'
+        command: [ '/app/entrypoint' ]
+        args: [ '/usr/sbin/apache2 -DFOREGROUND' ]
         imagePullPolicy: Always
         ports:
           - containerPort: 80
+            hostPort: 80
             protocol: TCP
+        volumeMounts:
+          - mountPath: /app/src/
+            name: src-volume
+          - mountPath: /etc/apache2/sites-enabled/
+            name: site-volume
+          - mountPath: /app/log
+            name: log-volume
         env:
           - name: DB_HOST
             valueFrom:
@@ -74,6 +86,8 @@ spec:
               secretKeyRef:
                 key: DB_PASSWORD
                 name: db-info
+          - name: APACHE_LOG_DIR
+            value: /app/log
         livenessProbe:
           httpGet:
             path: /diagnostic/liveness
@@ -85,15 +99,31 @@ spec:
             path: /diagnostic/readiness
             port: 80
             scheme: HTTP
+      volumes:
+        - name: src-volume
+          hostPath:
+            path: /Users/qijie.zhang/interview/app/src
+            type: Directory
+        - name: site-volume
+          hostPath:
+            path: /Users/qijie.zhang/interview/app/apache
+            type: Directory
+        - name: log-volume
+          hostPath:
+            path: /Users/qijie.zhang/interview/app/log
+            type: Directory
+        - name: migration-volume
+          hostPath:
+            path: /Users/qijie.zhang/interview/migration
+            type: Directory
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  labels:
-    app: devops-joi-db
   name: devops-joi-db
+  namespace: devops
 spec:
-  progressDeadlineSeconds: 60
+  serviceName: "devops-joi-db"
   replicas: 1
   selector:
     matchLabels:

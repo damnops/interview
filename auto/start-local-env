@@ -1,7 +1,20 @@
 #! /bin/bash -e
-#
 
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-docker-compose --project-name ${PROJECT_NAME} up
+docker-compose --project-name ${PROJECT_NAME} up -d
+
+echo -ne "Migrationing DB."
+while docker ps | grep  joi_migration > /dev/null
+do
+  echo -ne "."
+  sleep 1
+done
+echo ""
+echo "Mmigration DB Successful!"
+
+echo "Delete joi_migration container."
+docker ps -a | grep  joi_migration | awk '{print $1}' | xargs docker rm -f > /dev/null
+
+echo "This environment is running!"

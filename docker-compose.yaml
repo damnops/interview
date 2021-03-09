@@ -8,11 +8,15 @@ services:
       - "80:80"
     env_file:
       - ./config/env/local
-    # volumes:
-    #   - "./app/src:/app/src"
+    volumes:
+      - "./app/src:/app/src/"
+      - "./app/apache/:/etc/apache2/sites-enabled/"
+      - "./app/log:/app/log"
     depends_on:
       - db
       - migration
+    networks:
+      - backend
 
   migration:
     build:
@@ -29,11 +33,11 @@ services:
 
   db:
     image: "mysql:8"
-    privileged: true
+    #privileged: true
     networks:
       - backend
-    ports:
-      - "3306:3306"
+#    ports:
+#      - "3306:3306"
     env_file:
       - ./config/env/local
 

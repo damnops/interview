@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-cd $(dirname $0)/..
-source ./auto/set-env-helpers
+cd $(dirname $0)/../k8s
 
-kubectl delete -f k8s/kustomize-output.yaml
+kubectl delete -f deployment.yaml
