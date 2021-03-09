@@ -6,9 +6,9 @@ resources:
 - secret.yaml
 images:
 - name: registry.ap-southeast-1.aliyuncs.com/bthlt/app
-  newTag: 4e0a36e
+  newTag: f03a16b
 - name: registry.ap-southeast-1.aliyuncs.com/bthlt/migration
-  newTag: 4e0a36e
+  newTag: f03a16b
 - name: registry.cn-hangzhou.aliyuncs.com/bthlt/app
   newTag: 4b59680
 - name: registry.cn-hangzhou.aliyuncs.com/bthlt/migration
