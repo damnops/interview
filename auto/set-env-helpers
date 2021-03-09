@@ -15,8 +15,6 @@ display_status() {
 
 function terraform() {
 
-  [[ ! -f ./tmp/env ]] && echo > ./tmp/.env
-
   docker run --rm \
   -v ${PWD}:/working \
   -w /working \
@@ -24,7 +22,6 @@ function terraform() {
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   -e AWS_DEFAULT_REGION \
-  --env-file ./tmp/.env \
   hashicorp/terraform $@
 }
 

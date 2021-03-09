@@ -1,5 +1,0 @@
-access_key = "****"
-secret_key = "****"
-region     = "cn-beijing"
-
-project_name = "kubernetes"

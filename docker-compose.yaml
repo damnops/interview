@@ -4,12 +4,14 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    networks:
+      - backend
     ports:
       - "80:80"
     env_file:
       - ./config/env/local
-    # volumes:
-    #   - "./app/src:/app/src"
+    volumes:
+      - "./app/src:/app/src"
     depends_on:
       - db
       - migration

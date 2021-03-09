@@ -3,8 +3,7 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-kustomize edit set image joidevops/app:${GIT_HASH} joidevops/migration:${GIT_HASH}
-kustomize build . -o kustomize-output.yaml
+auto/build-k8s-manifest
 
 kubectl apply -f k8s/kustomize-output.yaml
 
