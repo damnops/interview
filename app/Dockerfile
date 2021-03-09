@@ -14,7 +14,7 @@ COPY src src
 
 VOLUME ${APP_DIR}
 
-RUN for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
+RUN  rm -f /etc/apache2/sites-available/000-default.conf &&  rm -f /etc/apache2/sites-enabled/000-default.conf  && for i in $(find ${APP_DIR} -type f -name '*.php'); do echo "<hr/>Build: ${GIT_HASH}@${TAG_TIME}<br/>" >> $i; done
 
 ENTRYPOINT ["/app/entrypoint"]
 
