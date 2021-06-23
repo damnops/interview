@@ -13,6 +13,11 @@ output "role_name" {
   value       = aws_iam_role.role.name
 }
 
+output "instance_profile_name" {
+  description = "The name of the instance profile name"
+  value       = aws_iam_instance_profile.interview_profile.name
+}
+
 output "policy_arn" {
   description = "The ARN assigned by AWS to this policy"
   value       = concat(aws_iam_policy.policy.*.arn, [""])[0]

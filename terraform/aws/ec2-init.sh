@@ -4,7 +4,7 @@ export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
 apt-get update -y
-apt-get install git make vim python3 python3-pip sshpass curl rsync -y
+apt-get install git make vim python3 python3-pip sshpass curl rsync awscli -y
 
 wget http://artifact.splunk.org.cn/yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
 chmod +x /usr/bin/yq
@@ -18,8 +18,8 @@ pip3 install ansible==2.10.4
 git clone https://gitee.com/toc-lib/kube-ansible.git /usr/local/src/kube-ansible
 pushd /usr/local/src/kube-ansible
 cp group_vars/template.yml group_vars/all.yml
-PUBLIC_IP=$(curl -s www.pubyun.com/dyndns/getip)
-PRIVATE_IP=$(hostname -i)
+PUBLIC_IP=$(curl -sS http://169.254.169.254/latest/meta-data/public-ipv4)
+PRIVATE_IP=$(curl -sS http://169.254.169.254/latest/meta-data/local-ipv4)
 
 yq eval --inplace "(.kubernetes.ssl.extension.[0]) = \"$PUBLIC_IP\"" group_vars/all.yml
 yq eval --inplace '(.ansible_python_interpreter) = "/usr/bin/python3"' group_vars/all.yml
@@ -36,3 +36,28 @@ echo "worker" >> inventory/hosts
 
 make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
 popd
+
+echo "aws ec2 terminate-instances --instance-ids $(curl -sS http://169.254.169.254/latest/meta-data/instance-id)" | at now + 4 hours
+
+### update DNS
+cat > /tmp/update-dns <<_EOF
+{
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "devops.joi.toc-platform.com",
+        "Type": "A",
+        "TTL": 60,
+        "ResourceRecords": [
+          {
+            "Value": "$(curl -sS http://169.254.169.254/latest/meta-data/public-ipv4)"
+          }
+        ]
+      }
+    }
+  ]
+}
+_EOF
+
+aws route53 change-resource-record-sets --hosted-zone-id Z20M894KO1IB4U --change-batch file:///tmp/update-dns

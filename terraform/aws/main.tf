@@ -38,6 +38,13 @@ module "ec2-sg" {
     to_port     = 6443,
     protocol    = "tcp",
     cidr_blocks = "0.0.0.0/0"
+  },
+  {
+    description = "allow ssh in",
+    from_port   = 30000,
+    to_port     = 32767,
+    protocol    = "tcp",
+    cidr_blocks = "0.0.0.0/0"
   }
   ]
 
@@ -63,7 +70,7 @@ module "ec2-user-role" {
   }]
 
   policy_details = [{
-    action    = ["*"],
+    action    = ["route53:*"],
     resources = ["*"]
     }
   ]
@@ -85,13 +92,14 @@ module "kube-ec2" {
   associate_public_ip_address = true
   user_data                   = file("${path.module}/ec2-init.sh")
   ami_id                      = "ami-0ae3e6717dc99c62b"
-  instance_type               = "t2.medium"
+  instance_type               = "t3a.medium"
+  iam_instance_profile        = module.ec2-user-role.instance_profile_name
   key_name                    = aws_key_pair.this.key_name
 
   root_block_device = [
     {
       volume_type = "gp2"
-      volume_size = 120
+      volume_size = 50
       encrypted   = false
     }
   ]

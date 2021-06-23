@@ -4,3 +4,10 @@ resources:
 - deployment.yaml
 - service.yaml
 - secret.yaml
+images:
+- name: joidevops/app
+  newName: joidevops/app
+  newTag: 4e0bc1d
+- name: joidevops/migration
+  newName: joidevops/migration
+  newTag: 4e0bc1d

@@ -55,3 +55,8 @@ resource "aws_iam_role_policy_attachment" "attach_policies" {
   role       = aws_iam_role.role.name
   policy_arn = var.policy_arn_list[count.index]
 }
+
+resource "aws_iam_instance_profile" "interview_profile" {
+  name = "interview_profile"
+  role = aws_iam_role.role.name
+}
