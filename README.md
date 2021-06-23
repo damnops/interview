@@ -65,11 +65,9 @@ This repo is used for devops interview.
 
 ### Setup kubectl config for k8s
 
-  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to `./tmp/kube-config.txt` in local terraform dir.
-
-  Use the following command to copy the config file as `config/kube-config.txt` to make kubectl in scripts work.
+  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to `config/kube-config.txt`. Kubectl in scripts has been already set with this config file work. Use following command for your local kubectl.
   ```
-  auto/get-kubeconfig-from-terraform {CLOUD_PROVIDER}
+  export KUBECONFIG=${PWD}/config/kube-config.txt
   ```
 
   Check the above files if there are something wrong.
