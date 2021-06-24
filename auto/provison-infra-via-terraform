@@ -6,16 +6,7 @@ source ./auto/set-env-helpers
 CONF_DIR="./terraform/$1"
 mkdir -p ${CONF_DIR}/tmp
 
-if [[ $1 == 'azure' ]]; then
-  echo ARM_CLIENT_ID="${ARM_CLIENT_ID:?ARM_CLIENT_ID must be set}" > ${CONF_DIR}/tmp/.env
-  echo ARM_CLIENT_SECRET="${ARM_CLIENT_SECRET:?ARM_CLIENT_SECRET must be set}" >> ${CONF_DIR}/tmp/.env
-  echo ARM_SUBSCRIPTION_ID="${ARM_SUBSCRIPTION_ID:?ARM_SUBSCRIPTION_ID must be set}" >> ${CONF_DIR}/tmp/.env
-  echo ARM_TENANT_ID="${ARM_TENANT_ID:?ARM_TENANT_ID must be set}" >> ${CONF_DIR}/tmp/.env
-fi
-
-ssh-keygen -t rsa -P "" -f ${CONF_DIR}/tmp/id_rsa <<<y 2>&1 >/dev/null
+[[ ! -f ${CONF_DIR}/tmp/id_rsa ]] && ssh-keygen -t rsa -P "" -f ${CONF_DIR}/tmp/id_rsa <<<y 2>&1 >/dev/null
 
 terraform -chdir=${CONF_DIR} init
 terraform -chdir=${CONF_DIR} apply -auto-approve
-
-cp ${CONF_DIR}/tmp/kube-config.txt config/kube-config.txt

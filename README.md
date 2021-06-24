@@ -30,42 +30,41 @@ This repo is used for devops interview.
 
 ### Build and release docker images
 
-  Github action will be triggered to build and release the images to alicr and dockerhub once code is pushed into main branch and any branch start with `joi-`. Please use following URLs to access the images.
+  Github action will be triggered to build and release the images to dockerhub once code is pushed into main branch or any branch start with `joi-`. Please use following URLs to access the images.
 
   **Dockerhub**
   ```
   App: joidevops/app:{TAG}
   Migration: joidevops/migratino:{TAG}
   ```
-  **Ali CR**
-  ```
-  App: registry.cn-hongkong.aliyuncs.com/joidevops/app:{TAG}
-  Migration: registry.cn-hongkong.aliyuncs.com/joidevops/migratino:{TAG}
-  ```
   
   If you want to push images to your own docker registry, update the docker registry credential in the `config/cr-credential` and set the right repo path for each image, then run the following script, it will push docker images to your docker hub.
   ```
   ./auto/release-docker-images-to-dockerhub
   ```
-  Accordingly, use `auto/release-docker-images-to-alicr` to push image to ali cr.
 
 ### Provision infrastructure
+
+  Make sure you've [configured the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) with proper credentials for according cloud provider before running the provision script.
+
+  Use following script to provision infrastructure.
 
   ```
   ./auto/provison-infra-via-terraform {CLOUD_PROVIDER}
   ```
-  Use this script to provision infrastructure on the according cloud, create a provider dir and terraform configs in `terraform` dir, terraform will provision it. 
+  Create provider dir and terraform configs in `terraform` dir, terraform will provision it.
+
   You can also use the extended script like 
   ```
   ./auto/provison-infra-on-aws
   ```
   to provision on the specific cloud.
 
-  Make sure you set the proper credential for terraform to work, check the code for each one.
-
 ### Setup kubectl config for k8s
 
-  After the provision infrastructure step is done, we should have a workable k8s cluster. Provision step will copy the kubectl config to `config/kube-config.txt`. Kubectl in scripts has been already set with this config file work. Use following command for your local kubectl.
+  After the provision infrastructure step is done, we should have a workable k8s cluster.
+  
+  Use `./auto/get-kubeconfig-for-interview` to retrive the kubectl config to `config/kube-config.txt` from remote. Kubectl in scripts has been already set with this config file to work. Use following command for your local kubectl.
   ```
   export KUBECONFIG=${PWD}/config/kube-config.txt
   ```

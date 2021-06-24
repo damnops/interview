@@ -7,7 +7,7 @@ resources:
 images:
 - name: joidevops/app
   newName: joidevops/app
-  newTag: 4e0bc1d
+  newTag: 25aa45d
 - name: joidevops/migration
   newName: joidevops/migration
-  newTag: 4e0bc1d
+  newTag: 25aa45d

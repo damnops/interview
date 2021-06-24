@@ -1,0 +1,31 @@
+name: Release Docker Image
+
+on:
+  push:
+    branches:
+    - main
+    - joi-**
+
+jobs:
+  release-docker-images-to-dockerhub:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # 1 Login to Dockerhub
+    - name: Login to DockerHub
+      env:
+        DOCKER_USER: "${{ secrets.DOCKER_USER }}"
+        DOCKER_PASS: "${{ secrets.DOCKER_PASS }}"
+      run: |
+        ./auto/auth-with-dockerhub
+
+    # 2 Buid and push image to Dockerhub
+    - name: Build and push image to DockerHub
+      run: |
+        ./auto/release-docker-images-to-dockerhub
+      env:
+        DOCKER_USER: "${{ secrets.DOCKER_USER }}"
+        DOCKER_PASS: "${{ secrets.DOCKER_PASS }}"

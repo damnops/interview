@@ -1,41 +1,4 @@
 #!/bin/bash
-sudo -i
-export LC_ALL="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-
-apt-get update -y
-apt-get install git make vim python3 python3-pip sshpass curl rsync awscli -y
-
-wget http://artifact.splunk.org.cn/yq/releases/download/v4.3.2/yq_linux_amd64 -O /usr/bin/yq
-chmod +x /usr/bin/yq
-
-ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-
-pip3 install --upgrade pip
-pip3 install ansible==2.10.4
-
-git clone https://gitee.com/toc-lib/kube-ansible.git /usr/local/src/kube-ansible
-pushd /usr/local/src/kube-ansible
-cp group_vars/template.yml group_vars/all.yml
-PUBLIC_IP=$(curl -sS http://169.254.169.254/latest/meta-data/public-ipv4)
-PRIVATE_IP=$(curl -sS http://169.254.169.254/latest/meta-data/local-ipv4)
-
-yq eval --inplace "(.kubernetes.ssl.extension.[0]) = \"$PUBLIC_IP\"" group_vars/all.yml
-yq eval --inplace '(.ansible_python_interpreter) = "/usr/bin/python3"' group_vars/all.yml
-yq eval --inplace '(.kubernetes.kubelet.pod_infra_container_image) = "k8s.gcr.io/pause:3.2"' group_vars/all.yml
-yq eval --inplace '(.kubernetes.settings.master_run_pod) = "true"' group_vars/all.yml
-
-# init inventory file
-echo "[master]" > inventory/hosts
-echo "$PRIVATE_IP" >> inventory/hosts
-echo "[worker]" >> inventory/hosts
-echo "[kubernetes:children]" >> inventory/hosts
-echo "master" >> inventory/hosts
-echo "worker" >> inventory/hosts
-
-make install DOWNLOAD_WAY=qiniu | tee /tmp/kube-ansible.log
-popd
 
 echo "aws ec2 terminate-instances --instance-ids $(curl -sS http://169.254.169.254/latest/meta-data/instance-id)" | at now + 4 hours
 
@@ -61,3 +24,60 @@ cat > /tmp/update-dns <<_EOF
 _EOF
 
 aws route53 change-resource-record-sets --hosted-zone-id Z20M894KO1IB4U --change-batch file:///tmp/update-dns
+
+### install k3s
+curl -sfL https://get.k3s.io | sh -
+
+### setup kubectl config
+cp /etc/rancher/k3s/k3s.yaml /tmp/kube-config.txt
+perl -pi -e 's/certificate-authority-data:.*/insecure-skip-tls-verify: true/g' /tmp/kube-config.txt
+perl -pi -e "s/127.0.0.1/$(curl -sS http://169.254.169.254/latest/meta-data/public-ipv4)/g" /tmp/kube-config.txt
+
+### setup download service
+kubectl create configmap kube-config --from-file /tmp/kube-config.txt
+cat > /tmp/kube-config.yaml <<_EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: "kube-config"
+          mountPath: "/usr/share/nginx/html/kube-config.txt"
+          subPath: "kube-config.txt"
+      restartPolicy: Always
+      volumes:
+        - name: "kube-config"
+          configMap:
+            name: "kube-config"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: NodePort
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30000
+_EOF
+
+### start download service
+kubectl apply -f /tmp/kube-config.yaml
