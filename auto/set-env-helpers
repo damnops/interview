@@ -35,7 +35,8 @@ function kubectl() {
 
 function kustomize() {
   docker run --rm \
+  --entrypoint=/app/kustomize \
   -v ${PWD}/k8s:/working \
   -w /working \
-  bitlayer/kustomize:v2.1.0 $@
+  k8s.gcr.io/kustomize/kustomize:v3.8.7 $@
 }
