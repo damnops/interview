@@ -1,7 +1,7 @@
-output "public_ip" {
-  value = module.kube-ec2.public_ip
+output "ec2_public_ip" {
+  value = module.interview-ec2.public_ip
 }
 
-output "public_dns" {
-  value = module.kube-ec2.public_dns
+output "friendly_dns" {
+  value = aws_route53_record.interview.name
 }

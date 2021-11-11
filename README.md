@@ -2,7 +2,7 @@
 
 This repo is used for devops interview.
 
-## Expectation
+## Expectations
 
 * There are many bad practices in this repo, try to make it better.
 * Any further improvement in this repo, like infra, HA, etc.
@@ -12,7 +12,7 @@ This repo is used for devops interview.
 * [docker](https://docs.docker.com/desktop/#download-and-install)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
-## Instructions
+## Instruction
 
 ### Start local environment
 
@@ -43,26 +43,23 @@ This repo is used for devops interview.
   ./auto/release-docker-images-to-dockerhub
   ```
 
+###  Setup interviewee name
+
+  Put the interviewee name in the file `interviewee_name` under the repo root, it will `date +%s` output as it if this file is not found, it will be used for identifing resources and part of the domain, domain will look like `{INTERVIEWEE_NAME}.devops.joi.toc-platform.com`.
+
+
 ### Provision infrastructure
 
   Make sure you've [configured the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) with proper credentials for according cloud provider before running the provision script.
 
-  Use following script to provision infrastructure.
-
-  ```
-  ./auto/provison-infra-via-terraform {CLOUD_PROVIDER}
-  ```
-  Create provider dir and terraform configs in `terraform` dir, terraform will provision it.
-
-  You can also use the extended script like 
+  Use following script to provision infrastructure on AWS.
   ```
   ./auto/provison-infra-on-aws
   ```
-  to provision on the specific cloud.
 
 ### Setup kubectl config for k8s
 
-  After the provision infrastructure step is done, we should have a workable k8s cluster.
+  After the infrastructure provision is done, we should have a workable k8s cluster.
   
   Use `./auto/get-kubeconfig-for-interview` to retrive the kubectl config to `config/kube-config.txt` from remote. Kubectl in scripts has been already set with this config file to work. Use following command for your local kubectl.
   ```
@@ -74,10 +71,10 @@ This repo is used for devops interview.
 ### Deploy application to k8s
 
   ```
-  ./auto/deploy-to-k8s
+  ./auto/deploy-app-to-k8s
   ```
   This script will generate the k8s relevant files and deploy it. We use [kustomize](https://kustomize.io/) to manage the configs.
-  After deployment process is finished, you can access the application via [http://devops.joi.toc-platform.com:32100](http://devops.joi.toc-platform.com:32100)
+  After deployment process is finished, you can access the application via http://{INTERVIEWEE_NAME}.devops.joi.toc-platform.com:32100
 
 ### Destroy infrastructure
 

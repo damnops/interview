@@ -3,6 +3,8 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
+set_interviewee_name
+
 CONF_DIR="./terraform/$1"
 
-terraform -chdir=${CONF_DIR} destroy -auto-approve
+terraform -chdir=${CONF_DIR} destroy -auto-approve -var interviewee_name=${INTERVIEWEE_NAME}

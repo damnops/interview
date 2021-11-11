@@ -1,6 +1,6 @@
 locals {
   tags = {
-    project = "kube"
+    project = "interview"
   }
 }
 
@@ -8,7 +8,7 @@ locals {
 module "vpc" {
   source = "./module/vpc"
 
-  name                 = "kube-vpc"
+  name                 = "interview-vpc-${var.interviewee_name}"
   cidr                 = "10.195.144.0/25"
   public_subnet_cidr   = ["10.195.144.0/27", "10.195.144.32/27"]
   private_subnet_cidr  = ["10.195.144.64/27", "10.195.144.96/27"]
@@ -22,7 +22,7 @@ module "vpc" {
 module "ec2-sg" {
   source = "./module/security-group"
 
-  name   = "kube-ec2-sg"
+  name   = "interview-ec2-sg-${var.interviewee_name}"
   vpc_id = module.vpc.vpc_id
 
   ingress_with_cidr_blocks = [{
@@ -61,8 +61,8 @@ module "ec2-sg" {
 module "ec2-user-role" {
   source = "./module/iam-role-policy"
 
-  role_name   = "ec2-user-role"
-  policy_name = "ec2-user-policy"
+  role_name   = "ec2-user-role-${var.interviewee_name}"
+  policy_name = "ec2-user-policy-${var.interviewee_name}"
 
   assume_role_policy = [{
     role_type   = ["Service"]
@@ -79,14 +79,14 @@ module "ec2-user-role" {
 }
 
 resource "aws_key_pair" "this" {
-  key_name   = "kube-ec2-key"
+  key_name   = "interview-ec2-key-${var.interviewee_name}"
   public_key = file("${path.module}/tmp/id_rsa.pub")
 }
 
-module "kube-ec2" {
+module "interview-ec2" {
   source = "./module/ec2"
 
-  name                        = "kube-ec2"
+  name                        = "interview-ec2-${var.interviewee_name}"
   subnet_ids                  = module.vpc.public_subnets
   vpc_security_group_ids      = module.ec2-sg.security_group_id
   associate_public_ip_address = true
@@ -116,4 +116,19 @@ module "kube-ec2" {
 
   tags        = local.tags
   volume_tags = local.tags
+}
+
+data "aws_route53_zone" "toc" {
+  name           = "toc-platform.com."
+}
+
+resource "aws_route53_record" "interview" {
+  zone_id = data.aws_route53_zone.toc.zone_id
+  name    = "${var.interviewee_name}.devops.joi.toc-platform.com"
+  type    = "A"
+  ttl     = "300"
+  records = module.interview-ec2.public_ip
+  depends_on = [
+    module.interview-ec2.public_ip
+  ]
 }

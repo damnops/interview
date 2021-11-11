@@ -3,10 +3,12 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
+set_interviewee_name
+
 CONF_DIR="./terraform/$1"
 mkdir -p ${CONF_DIR}/tmp
 
 [[ ! -f ${CONF_DIR}/tmp/id_rsa ]] && ssh-keygen -t rsa -P "" -f ${CONF_DIR}/tmp/id_rsa <<<y 2>&1 >/dev/null
 
 terraform -chdir=${CONF_DIR} init
-terraform -chdir=${CONF_DIR} apply -auto-approve
+terraform -chdir=${CONF_DIR} apply -auto-approve -var interviewee_name=${INTERVIEWEE_NAME}

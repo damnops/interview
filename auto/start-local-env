@@ -4,4 +4,4 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
-docker-compose --project-name ${PROJECT_NAME} up
+docker-compose --project-name ${PROJECT_NAME} up -d

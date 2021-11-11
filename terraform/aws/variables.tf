@@ -3,3 +3,8 @@ variable "customize_ip" {
   default     = "202.66.38.130/32"
   type        = string
 }
+
+variable "interviewee_name" {
+  description = "Name of interviewee"
+  type        = string
+}

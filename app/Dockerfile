@@ -5,6 +5,7 @@ ARG GIT_HASH=xxxxxxx
 ARG TAG_TIME=194910010000
 
 RUN docker-php-ext-install pdo_mysql
+RUN rm -f /etc/apache2/sites-enabled/*
 COPY apache/ /etc/apache2/sites-enabled/
 
 WORKDIR ${APP_DIR}

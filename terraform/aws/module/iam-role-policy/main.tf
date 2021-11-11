@@ -57,6 +57,5 @@ resource "aws_iam_role_policy_attachment" "attach_policies" {
 }
 
 resource "aws_iam_instance_profile" "interview_profile" {
-  name = "interview_profile"
   role = aws_iam_role.role.name
 }

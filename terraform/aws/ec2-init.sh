@@ -1,30 +1,4 @@
 #!/bin/bash
-
-echo "aws ec2 terminate-instances --instance-ids $(curl -sS http://169.254.169.254/latest/meta-data/instance-id)" | at now + 4 hours
-
-### update DNS
-cat > /tmp/update-dns <<_EOF
-{
-  "Changes": [
-    {
-      "Action": "UPSERT",
-      "ResourceRecordSet": {
-        "Name": "devops.joi.toc-platform.com",
-        "Type": "A",
-        "TTL": 60,
-        "ResourceRecords": [
-          {
-            "Value": "$(curl -sS http://169.254.169.254/latest/meta-data/public-ipv4)"
-          }
-        ]
-      }
-    }
-  ]
-}
-_EOF
-
-aws route53 change-resource-record-sets --hosted-zone-id Z20M894KO1IB4U --change-batch file:///tmp/update-dns
-
 ### install k3s
 curl -sfL https://get.k3s.io | sh -
 
