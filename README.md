@@ -50,9 +50,7 @@ This repo is used for devops interview.
 
 ### Provision infrastructure
 
-  Make sure you've [configured the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) with proper credentials for according cloud provider before running the provision script.
-
-  Use following script to provision infrastructure on AWS.
+  [Set AWS environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set) and run following script to provision infrastructure on AWS.
   ```
   ./auto/provison-infra-on-aws
   ```

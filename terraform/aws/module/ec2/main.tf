@@ -16,7 +16,6 @@ resource "aws_instance" "this" {
   monitoring             = var.monitoring
   get_password_data      = var.get_password_data
   vpc_security_group_ids = var.vpc_security_group_ids
-  iam_instance_profile   = var.iam_instance_profile
 
   associate_public_ip_address = var.associate_public_ip_address
   private_ip                  = length(var.private_ips) > 0 ? element(var.private_ips, count.index) : var.private_ip

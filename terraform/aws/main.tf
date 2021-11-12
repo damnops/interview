@@ -9,9 +9,9 @@ module "vpc" {
   source = "./module/vpc"
 
   name                 = "interview-vpc-${var.interviewee_name}"
-  cidr                 = "10.195.144.0/25"
-  public_subnet_cidr   = ["10.195.144.0/27", "10.195.144.32/27"]
-  private_subnet_cidr  = ["10.195.144.64/27", "10.195.144.96/27"]
+  cidr                 = "10.20.30.0/25"
+  public_subnet_cidr   = ["10.20.30.0/27", "10.20.30.32/27"]
+  private_subnet_cidr  = ["10.20.30.64/27", "10.20.30.96/27"]
   enable_dns_hostnames = true
   enable_dns_support   = true
 
@@ -58,26 +58,6 @@ module "ec2-sg" {
   tags = local.tags
 }
 
-module "ec2-user-role" {
-  source = "./module/iam-role-policy"
-
-  role_name   = "ec2-user-role-${var.interviewee_name}"
-  policy_name = "ec2-user-policy-${var.interviewee_name}"
-
-  assume_role_policy = [{
-    role_type   = ["Service"]
-    identifiers = ["ec2.amazonaws.com"]
-  }]
-
-  policy_details = [{
-    action    = ["route53:*"],
-    resources = ["*"]
-    }
-  ]
-
-  tags = local.tags
-}
-
 resource "aws_key_pair" "this" {
   key_name   = "interview-ec2-key-${var.interviewee_name}"
   public_key = file("${path.module}/tmp/id_rsa.pub")
@@ -93,7 +73,6 @@ module "interview-ec2" {
   user_data                   = file("${path.module}/ec2-init.sh")
   ami_id                      = "ami-018c1c51c7a13e363"
   instance_type               = "t3a.medium"
-  iam_instance_profile        = module.ec2-user-role.instance_profile_name
   key_name                    = aws_key_pair.this.key_name
 
   root_block_device = [
