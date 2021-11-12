@@ -45,7 +45,7 @@ This repo is used for devops interview.
 
 ###  Setup interviewee name
 
-  Put the interviewee name in the file `interviewee_name` under the repo root, it will `date +%s` output as it if this file is not found, it will be used for identifing resources and part of the domain, domain will look like `{INTERVIEWEE_NAME}.devops.joi.toc-platform.com`.
+  Put the interviewee name in the file `interviewee_name` under the repo root, it will use `date +%s` output if the file is not found. This name will be used part of the domain, so please make it following a valid domain name pattern. The final domain will look like `{INTERVIEWEE_NAME}.devops.joi.toc-platform.com`.
 
 
 ### Provision infrastructure
