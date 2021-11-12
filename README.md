@@ -72,7 +72,7 @@ This repo is used for devops interview.
   ./auto/deploy-app-to-k8s
   ```
   This script will generate the k8s relevant files and deploy it. We use [kustomize](https://kustomize.io/) to manage the configs.
-  After deployment process is finished, you can access the application via http://{INTERVIEWEE_NAME}.devops.joi.toc-platform.com:32100
+  After deployment process is finished, you can access the application via `http://{INTERVIEWEE_NAME}.devops.joi.toc-platform.com:32100`
 
 ### Destroy infrastructure
 
