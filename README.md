@@ -77,6 +77,6 @@ This repo is used for devops interview.
 ### Destroy infrastructure
 
   ```
-  ./auto/destroy-infra-via-terraform {CLOUD_PROVIDER}
+  ./auto/destroy-infra-on-aws
   ```
-  Destroy the infrastructure which created by the provision scripts, you can also use the extended script.
+  Destroy the resources which created by the provision scripts.
