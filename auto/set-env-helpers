@@ -42,5 +42,5 @@ function kustomize() {
   --entrypoint=/app/kustomize \
   -v ${PWD}/k8s:/working \
   -w /working \
-  k8s.gcr.io/kustomize/kustomize:v3.8.7 $@
+  joidevops/kustomize:v3.8.7 $@
 }
