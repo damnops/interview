@@ -1,0 +1,12 @@
+#! /bin/bash -e
+#
+cd $(dirname $0)/..
+source ./auto/set-env-helpers
+
+set_interviewee_name
+
+CONF_DIR="./terraform/aws"
+
+terraform -chdir=${CONF_DIR} init -backend-config="key=tf-state/${INTERVIEWEE_NAME}"
+
+auto/destroy-infra-via-terraform aws

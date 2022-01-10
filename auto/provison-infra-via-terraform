@@ -10,5 +10,5 @@ mkdir -p ${CONF_DIR}/tmp
 
 [[ ! -f ${CONF_DIR}/tmp/id_rsa ]] && ssh-keygen -t rsa -P "" -f ${CONF_DIR}/tmp/id_rsa <<<y 2>&1 >/dev/null
 
-terraform -chdir=${CONF_DIR} init
+terraform -chdir=${CONF_DIR} init -backend-config="key=tf-state/${INTERVIEWEE_NAME}"
 terraform -chdir=${CONF_DIR} apply -auto-approve -var interviewee_name=${INTERVIEWEE_NAME}
