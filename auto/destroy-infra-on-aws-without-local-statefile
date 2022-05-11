@@ -3,6 +3,8 @@
 cd $(dirname $0)/..
 source ./auto/set-env-helpers
 
+rm -f terraform/aws/.terraform/terraform.tfstate
+
 set_interviewee_name
 
 CONF_DIR="./terraform/aws"
